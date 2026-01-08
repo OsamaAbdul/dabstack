@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -17,7 +18,7 @@ export function ProjectsSection() {
   const handleOnboardingComplete = async (data: OnboardingData) => {
     setIsCreating(true);
 
-    const { error } = await createProject({
+    const { data: newProject, error } = await createProject({
       type: data.type,
       target_audience: data.targetAudience.join(", "),
       budget: data.budget,
@@ -31,6 +32,18 @@ export function ProjectsSection() {
         description: error.message,
       });
     } else {
+      // Send initial onboarding message
+      if (newProject) {
+        const messageContent = `**New Projects Started** 🚀\n\n**Type:** ${data.type}\n**Audience:** ${data.targetAudience.join(", ")}\n**Budget:** ₦${data.budget.toLocaleString()}\n**Timeline:** ${data.timeline ? data.timeline.toLocaleDateString() : 'Not specified'}`;
+
+        await supabase.from("messages").insert({
+          project_id: newProject.id,
+          sender_id: newProject.user_id,
+          content: messageContent,
+          type: "text"
+        });
+      }
+
       toast.success("Project created!", {
         description: "Your project is now under review.",
       });

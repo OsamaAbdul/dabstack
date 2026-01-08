@@ -25,11 +25,27 @@ export function ChatInput({ onSendMessage, onUploadMedia }: ChatInputProps) {
     const [text, setText] = useState("");
     const [showEmoji, setShowEmoji] = useState(false);
     const [isRecording, setIsRecording] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
+    const [recordingDuration, setRecordingDuration] = useState(0);
     const [isUploading, setIsUploading] = useState(false);
     const { theme } = useTheme();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<Blob[]>([]);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+    // Cleanup timer on unmount
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+        };
+    }, []);
+
+    const formatDuration = (seconds: number) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
 
     const handleSend = async () => {
         if (!text.trim() || isUploading) return;
@@ -76,31 +92,95 @@ export function ChatInput({ onSendMessage, onUploadMedia }: ChatInputProps) {
             };
 
             mediaRecorder.onstop = async () => {
-                const audioBlob = new Blob(chunksRef.current, { type: "audio/webm" });
-                const audioFile = new File([audioBlob], "recording.webm", { type: "audio/webm" });
-
-                setIsUploading(true);
-                const { publicUrl, error } = await onUploadMedia(audioFile);
-                if (publicUrl) {
-                    await onSendMessage(publicUrl, "audio");
-                } else {
-                    toast.error("Failed to send voice note");
-                }
-                setIsUploading(false);
-                stream.getTracks().forEach(track => track.stop());
+                // Determine if we should send or just discard based on flag? 
+                // Currently onstop handles sending. We might need a way to discard.
+                // Logic moved to handleSendRecording / handleCancelRecording
             };
 
             mediaRecorder.start();
             setIsRecording(true);
+            setIsPaused(false);
+            setRecordingDuration(0);
+
+            timerRef.current = setInterval(() => {
+                setRecordingDuration(prev => prev + 1);
+            }, 1000);
+
         } catch (err) {
+            console.error(err);
             toast.error("Microphone access denied");
         }
     };
 
-    const stopRecording = () => {
-        if (mediaRecorderRef.current && isRecording) {
-            mediaRecorderRef.current.stop();
-            setIsRecording(false);
+    const pauseRecording = () => {
+        if (mediaRecorderRef.current && isRecording && !isPaused) {
+            mediaRecorderRef.current.pause();
+            setIsPaused(true);
+            if (timerRef.current) clearInterval(timerRef.current);
+        }
+    };
+
+    const resumeRecording = () => {
+        if (mediaRecorderRef.current && isRecording && isPaused) {
+            mediaRecorderRef.current.resume();
+            setIsPaused(false);
+            timerRef.current = setInterval(() => {
+                setRecordingDuration(prev => prev + 1);
+            }, 1000);
+        }
+    };
+
+    const cancelRecording = () => {
+        if (mediaRecorderRef.current) {
+            mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+            mediaRecorderRef.current = null; // Detach
+        }
+        if (timerRef.current) clearInterval(timerRef.current);
+        setIsRecording(false);
+        setIsPaused(false);
+        setRecordingDuration(0);
+        chunksRef.current = [];
+    };
+
+    const sendRecording = async () => {
+        if (!mediaRecorderRef.current) return;
+
+        // Stop recorder and handle data
+        const recorder = mediaRecorderRef.current;
+
+        // We wrap the onstop logic here to ensure we capture the specific "send" intent
+        // Using a promise to wait for final data
+        const blobPromise = new Promise<Blob>((resolve) => {
+            recorder.onstop = () => {
+                const audioBlob = new Blob(chunksRef.current, { type: "audio/webm" });
+                resolve(audioBlob);
+            };
+        });
+
+        recorder.stop();
+        if (timerRef.current) clearInterval(timerRef.current);
+
+        setIsRecording(false);
+        setIsPaused(false);
+        setIsUploading(true);
+
+        try {
+            const audioBlob = await blobPromise;
+            const audioFile = new File([audioBlob], "recording.webm", { type: "audio/webm" });
+
+            const { publicUrl, error } = await onUploadMedia(audioFile);
+            if (publicUrl) {
+                await onSendMessage(publicUrl, "audio");
+            } else {
+                toast.error("Failed to send voice note");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Error processing recording");
+        } finally {
+            setIsUploading(false);
+            recorder.stream.getTracks().forEach(track => track.stop());
+            setRecordingDuration(0);
         }
     };
 
@@ -116,88 +196,132 @@ export function ChatInput({ onSendMessage, onUploadMedia }: ChatInputProps) {
                 </div>
             )}
 
-            <div className="flex items-center gap-2 max-w-4xl mx-auto">
-                <div className="flex items-center">
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setShowEmoji(!showEmoji)}
-                        className={cn("text-muted-foreground", showEmoji && "text-primary")}
-                    >
-                        <Smile className="h-5 w-5" />
-                    </Button>
+            {isRecording ? (
+                <div className="flex items-center gap-4 max-w-4xl mx-auto h-[44px]">
+                    <div className="flex items-center gap-2 text-destructive animate-pulse">
+                        <Mic className="h-4 w-4" />
+                        <span className="text-sm font-medium whitespace-nowrap">
+                            {formatDuration(recordingDuration)}
+                        </span>
+                    </div>
+                    <div className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
+                        <div className={cn(
+                            "h-full bg-destructive transition-all duration-1000",
+                            isPaused ? "opacity-50" : "animate-pulse"
+                        )} style={{ width: '100%' }} />
+                    </div>
 
-                    <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        ref={fileInputRef}
-                        onChange={handleFileSelect}
-                    />
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => fileInputRef.current?.click()}
-                        className="text-muted-foreground"
-                        disabled={isUploading}
-                    >
-                        {isUploading ? (
-                            <Loader2 className="h-5 w-5 animate-spin" />
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={cancelRecording}
+                            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                        >
+                            <X className="h-5 w-5" />
+                        </Button>
+
+                        {isPaused ? (
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={resumeRecording}
+                                className="text-primary hover:bg-primary/10"
+                            >
+                                <Mic className="h-5 w-5" />
+                            </Button>
                         ) : (
-                            <Paperclip className="h-5 w-5" />
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={pauseRecording}
+                                className="text-primary hover:bg-primary/10"
+                            >
+                                <MicOff className="h-5 w-5" />
+                            </Button>
                         )}
-                    </Button>
-                </div>
 
-                <div className="flex-1 relative">
-                    <Input
-                        placeholder={isRecording ? "Recording voice note..." : "Type a message..."}
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter" && !e.shiftKey) {
-                                e.preventDefault();
-                                handleSend();
-                            }
-                        }}
-                        disabled={isRecording || isUploading}
-                        className="pr-10 bg-muted/50 border-none focus-visible:ring-1"
-                    />
-                </div>
-
-                <div className="flex items-center gap-1">
-                    {text.trim() || isUploading ? (
                         <Button
                             size="icon"
-                            onClick={handleSend}
-                            disabled={!text.trim() || isUploading}
+                            onClick={sendRecording}
                             className="rounded-full bg-primary hover:bg-primary/90"
                         >
                             <Send className="h-5 w-5 text-primary-foreground" />
                         </Button>
-                    ) : (
+                    </div>
+                </div>
+            ) : (
+                <div className="flex items-center gap-2 max-w-4xl mx-auto">
+                    <div className="flex items-center">
                         <Button
+                            variant="ghost"
                             size="icon"
-                            onMouseDown={startRecording}
-                            onMouseUp={stopRecording}
-                            onTouchStart={startRecording}
-                            onTouchEnd={stopRecording}
-                            className={cn(
-                                "rounded-full transition-all duration-300",
-                                isRecording
-                                    ? "bg-destructive hover:bg-destructive/90 scale-125 animate-pulse"
-                                    : "bg-primary hover:bg-primary/90"
-                            )}
+                            onClick={() => setShowEmoji(!showEmoji)}
+                            className={cn("text-muted-foreground", showEmoji && "text-primary")}
                         >
-                            {isRecording ? (
-                                <MicOff className="h-5 w-5 text-primary-foreground" />
+                            <Smile className="h-5 w-5" />
+                        </Button>
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            ref={fileInputRef}
+                            onChange={handleFileSelect}
+                        />
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="text-muted-foreground"
+                            disabled={isUploading}
+                        >
+                            {isUploading ? (
+                                <Loader2 className="h-5 w-5 animate-spin" />
                             ) : (
-                                <Mic className="h-5 w-5 text-primary-foreground" />
+                                <Paperclip className="h-5 w-5" />
                             )}
                         </Button>
-                    )}
+                    </div>
+
+                    <div className="flex-1 relative">
+                        <Input
+                            placeholder="Type a message..."
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    handleSend();
+                                }
+                            }}
+                            disabled={isUploading}
+                            className="pr-10 bg-muted/50 border-none focus-visible:ring-1"
+                        />
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                        {text.trim() || isUploading ? (
+                            <Button
+                                size="icon"
+                                onClick={handleSend}
+                                disabled={!text.trim() || isUploading}
+                                className="rounded-full bg-primary hover:bg-primary/90"
+                            >
+                                <Send className="h-5 w-5 text-primary-foreground" />
+                            </Button>
+                        ) : (
+                            <Button
+                                size="icon"
+                                onClick={startRecording}
+                                className="rounded-full bg-primary hover:bg-primary/90"
+                            >
+                                <Mic className="h-5 w-5 text-primary-foreground" />
+                            </Button>
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
