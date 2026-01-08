@@ -1,13 +1,16 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Menu, X } from "lucide-react";
 
 interface NavbarProps {
   onGetStarted: () => void;
 }
 
 export function Navbar({ onGetStarted }: NavbarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -27,7 +30,8 @@ export function Navbar({ onGetStarted }: NavbarProps) {
           </div>
         </motion.div>
 
-        <div className="flex items-center gap-4">
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
           <Button
             variant="ghost"
@@ -43,18 +47,49 @@ export function Navbar({ onGetStarted }: NavbarProps) {
             Start Building
           </Button>
         </div>
-      </div>
-    </motion.nav>
-  );
-}
 
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      className="text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium text-sm"
-    >
-      {children}
-    </a>
+        {/* Mobile Menu Toggle */}
+        <div className="md:hidden flex items-center gap-4">
+          <ThemeToggle />
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden overflow-hidden bg-white dark:bg-[#0A192F] border-t border-gray-200 dark:border-white/10 mt-4"
+          >
+            <div className="flex flex-col gap-4 py-4 px-2">
+              <Button
+                variant="ghost"
+                className="w-full justify-start text-lg"
+                onClick={() => {
+                  onGetStarted();
+                  setIsOpen(false);
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                className="w-full justify-center text-lg bg-blue-600 text-white"
+                onClick={() => {
+                  onGetStarted();
+                  setIsOpen(false);
+                }}
+              >
+                Start Building
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 }
