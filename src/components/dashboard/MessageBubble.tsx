@@ -12,6 +12,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
 type Message = Database["public"]["Tables"]["messages"]["Row"];
@@ -26,6 +27,7 @@ export function MessageBubble({ message, onEdit, onDelete }: MessageBubbleProps)
     const { user } = useAuth();
     const isMe = message.sender_id === user?.id;
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(message.content);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -156,14 +158,25 @@ export function MessageBubble({ message, onEdit, onDelete }: MessageBubbleProps)
                             )}
 
                             {message.type === "image" && (
-                                <div className="rounded-lg overflow-hidden">
-                                    <img
-                                        src={message.content}
-                                        alt="Sent image"
-                                        className="max-w-full h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                                        onClick={() => window.open(message.content, "_blank")}
-                                    />
-                                </div>
+                                <>
+                                    <div className="rounded-lg overflow-hidden">
+                                        <img
+                                            src={message.content}
+                                            alt="Sent image"
+                                            className="max-w-full h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                                            onClick={() => setIsPreviewOpen(true)}
+                                        />
+                                    </div>
+                                    <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
+                                        <DialogContent className="max-w-4xl p-0 overflow-hidden bg-transparent border-none shadow-none">
+                                            <img
+                                                src={message.content}
+                                                alt="Preview"
+                                                className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
+                                            />
+                                        </DialogContent>
+                                    </Dialog>
+                                </>
                             )}
 
                             {message.type === "audio" && (

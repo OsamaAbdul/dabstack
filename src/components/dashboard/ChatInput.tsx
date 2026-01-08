@@ -173,7 +173,7 @@ export function ChatInput({ onSendMessage, onUploadMedia }: ChatInputProps) {
                             disabled={!text.trim() || isUploading}
                             className="rounded-full bg-primary hover:bg-primary/90"
                         >
-                            <Send className="h-5 w-5 text-white" />
+                            <Send className="h-5 w-5 text-primary-foreground" />
                         </Button>
                     ) : (
                         <Button
@@ -190,9 +190,9 @@ export function ChatInput({ onSendMessage, onUploadMedia }: ChatInputProps) {
                             )}
                         >
                             {isRecording ? (
-                                <MicOff className="h-5 w-5 text-white" />
+                                <MicOff className="h-5 w-5 text-primary-foreground" />
                             ) : (
-                                <Mic className="h-5 w-5 text-white" />
+                                <Mic className="h-5 w-5 text-primary-foreground" />
                             )}
                         </Button>
                     )}

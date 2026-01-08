@@ -150,7 +150,7 @@ export default function Auth() {
                       <Input
                         id="name"
                         type="text"
-                        placeholder="osama adul"
+                        placeholder="osama abdul"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="pl-10 h-11"

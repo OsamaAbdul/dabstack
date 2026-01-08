@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
 import { Database } from "@/integrations/supabase/types";
@@ -47,7 +48,19 @@ export function useMessages(projectId: string | null) {
                     filter: `project_id=eq.${projectId}`,
                 },
                 (payload) => {
-                    setMessages((prev) => [...prev, payload.new as Message]);
+                    const newMessage = payload.new as Message;
+                    setMessages((prev) => [...prev, newMessage]);
+
+                    // Show toast notification for messages from others
+                    if (user && newMessage.sender_id !== user.id) {
+                        toast.message("New Message", {
+                            description: newMessage.content || "Sent an attachment",
+                            action: {
+                                label: "View",
+                                onClick: () => window.focus(),
+                            },
+                        });
+                    }
                 }
             )
             .on(

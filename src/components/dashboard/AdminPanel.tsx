@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { usePresence } from "@/hooks/usePresence";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -62,6 +63,7 @@ const statusLabels: Record<ProjectStatus, string> = {
 export function AdminPanel({ onOpenChat }: AdminPanelProps) {
   const { projects, updateProjectStatus } = useProjects();
   const { users, isLoading: usersLoading, updateUserRole } = useUsers();
+  const { onlineUsers } = usePresence();
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
 
   const handleMarkPaid = async (project: Project) => {
@@ -267,8 +269,13 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
                     <tr key={u.id} className="border-b last:border-0 hover:bg-muted/20 transition-colors">
                       <td className="p-4">
                         <div className="flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
-                            {u.email.charAt(0).toUpperCase()}
+                          <div className="relative">
+                            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
+                              {u.email.charAt(0).toUpperCase()}
+                            </div>
+                            {onlineUsers.includes(u.user_id) && (
+                              <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-white" title="Online" />
+                            )}
                           </div>
                           <div>
                             <p className="font-semibold text-sm">{u.full_name || "New User"}</p>
