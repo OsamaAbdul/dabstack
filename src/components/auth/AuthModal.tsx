@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Sparkles, Mail, Lock, User, ArrowRight, Chrome, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +31,23 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
+
+  const handleGoogleLogin = async () => {
+    setIsSubmitting(true);
+    setError("");
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`,
+        },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      setError(err.message);
+      setIsSubmitting(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,8 +88,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
           {/* Social Auth */}
           <div className="grid grid-cols-1 gap-3 mb-6">
-            <Button variant="outline" className="h-11 font-medium hover-lift">
-              <Chrome className="mr-2 h-4 w-4" />
+            <Button
+              variant="outline"
+              className="h-11 font-medium hover-lift"
+              onClick={handleGoogleLogin}
+              disabled={isSubmitting}
+              type="button"
+            >
+              {isSubmitting ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Chrome className="mr-2 h-4 w-4" />
+              )}
               Google
             </Button>
           </div>
