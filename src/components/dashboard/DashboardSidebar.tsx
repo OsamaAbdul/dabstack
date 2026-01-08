@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useNavigate } from "react-router-dom";
 
 interface DashboardSidebarProps {
   activeSection: string;
@@ -36,6 +37,12 @@ export function DashboardSidebar({
   onClose
 }: DashboardSidebarProps) {
   const { signOut, isAdmin } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <>
@@ -164,7 +171,7 @@ export function DashboardSidebar({
             <ThemeToggle />
             <Button
               variant="ghost"
-              onClick={signOut}
+              onClick={handleLogout}
               className="flex-1 justify-start gap-3 text-white/50 hover:text-white hover:bg-white/10 rounded-xl"
             >
               <LogOut className="h-4 w-4" />
