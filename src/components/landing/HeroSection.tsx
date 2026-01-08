@@ -106,7 +106,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
               Start Building
             </Button>
 
-            <a href="https://wa.me/23470333221019" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/2347033221019" target="_blank" rel="noopener noreferrer">
               <Button
                 variant="outline"
                 size="lg"

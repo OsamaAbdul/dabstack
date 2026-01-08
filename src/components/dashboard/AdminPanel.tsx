@@ -285,18 +285,37 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
                       <td className="p-4 text-sm text-muted-foreground">{format(new Date(u.created_at), "MMM d, yyyy")}</td>
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full"><Mail className="h-4 w-4" /></Button>
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 rounded-full text-blue-500"
+                            className="h-8 w-8 rounded-full hover:bg-muted"
+                            onClick={() => window.location.href = `mailto:${u.email}`}
+                            title="Send Email"
+                          >
+                            <Mail className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className={cn(
+                              "h-8 w-8 rounded-full",
+                              u.role === "admin"
+                                ? "bg-blue-100 text-blue-600 hover:bg-blue-200"
+                                : "text-muted-foreground hover:bg-muted"
+                            )}
                             onClick={() => {
                               const newRole = u.role === "admin" ? "user" : "admin";
                               updateUserRole(u.user_id, newRole);
-                              toast.info(`Updated role for ${u.email} to ${newRole}`);
+                              toast.info(
+                                newRole === "admin"
+                                  ? `User promoted to Admin`
+                                  : `Admin privileges removed`,
+                                { description: `Updated role for ${u.email}` }
+                              );
                             }}
+                            title={u.role === "admin" ? "Remove Admin Privileges" : "Promote to Admin"}
                           >
-                            <Shield className="h-4 w-4" />
+                            <Shield className={cn("h-4 w-4", u.role === "admin" && "fill-current")} />
                           </Button>
                         </div>
                       </td>

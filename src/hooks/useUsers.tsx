@@ -84,9 +84,12 @@ export function useUsers() {
     }, [isAdmin]);
 
     const updateUserRole = async (userId: string, newRole: UserRole) => {
+        // Enforce single role: Delete existing first
+        await supabase.from("user_roles").delete().eq("user_id", userId);
+
         const { error } = await supabase
             .from("user_roles")
-            .upsert({ user_id: userId, role: newRole }, { onConflict: "user_id,role" });
+            .insert({ user_id: userId, role: newRole });
 
         if (!error) {
             setUsers(prev => prev.map(u => u.user_id === userId ? { ...u, role: newRole } : u));
