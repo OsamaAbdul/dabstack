@@ -75,9 +75,21 @@ export default function Dashboard() {
     <div className="min-h-screen bg-muted/30">
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-primary text-primary-foreground">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5" />
-          <span className="font-semibold">Dabstack</span>
+        <div className="flex items-center">
+          <img
+            src="/LIGHTMODE.jpg"
+            alt="Dabstack"
+            className="h-8 w-auto dark:hidden rounded-lg shadow-sm"
+            width={80}
+            height={64}
+          />
+          <img
+            src="/DARKMODE.png"
+            alt="Dabstack"
+            className="h-8 w-auto hidden dark:block rounded-lg shadow-sm"
+            width={80}
+            height={64}
+          />
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
