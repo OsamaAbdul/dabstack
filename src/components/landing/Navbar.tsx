@@ -24,9 +24,21 @@ export function Navbar({ onGetStarted }: NavbarProps) {
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 400 }}
         >
-          <div className="flex items-center gap-1">
-            <span className="text-2xl font-bold tracking-wider text-blue-600 dark:text-[#00E5FF]">DABSTACK</span>
-            <div className="h-2 w-2 bg-blue-600 dark:bg-[#00E5FF] rounded-full animate-pulse" />
+          <div className="flex items-center">
+            <img
+              src="/LIGHTMODE.jpg"
+              alt="DABSTACK"
+              className="dark:hidden rounded-xl shadow-sm"
+              width={100}
+              height={80}
+            />
+            <img
+              src="/DARKMODE.png"
+              alt="DABSTACK"
+              className="hidden dark:block rounded-xl shadow-sm"
+              width={100}
+              height={80}
+            />
           </div>
         </motion.div>
 

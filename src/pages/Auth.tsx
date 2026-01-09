@@ -104,13 +104,25 @@ export default function Auth() {
         <Card className="p-8 shadow-large border-border/50">
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="mx-auto h-14 w-14 rounded-xl bg-primary flex items-center justify-center shadow-medium mb-4">
-              <Sparkles className="h-7 w-7 text-primary-foreground" />
+            <div className="flex items-center justify-center mb-6">
+              <img
+                src="/LIGHTMODE.jpg"
+                alt="DABSTACK"
+                className="dark:hidden rounded-xl shadow-sm"
+                width={100}
+                height={80}
+              />
+              <img
+                src="/DARKMODE.png"
+                alt="DABSTACK"
+                className="hidden dark:block rounded-xl shadow-sm"
+                width={100}
+                height={80}
+              />
             </div>
             <h1 className="text-2xl font-bold">
               {mode === "signin" ? "Welcome back" : "Create an account"}
             </h1>
-
           </div>
 
           {/* Error Message */}

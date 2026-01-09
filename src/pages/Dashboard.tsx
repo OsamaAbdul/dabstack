@@ -11,6 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Loader2, MessageSquare, CreditCard, Settings, Sparkles, Menu } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export default function Dashboard() {
   const { user, isAdmin, isLoading } = useAuth();
@@ -78,14 +79,17 @@ export default function Dashboard() {
           <Sparkles className="h-5 w-5" />
           <span className="font-semibold">Dabstack</span>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setIsSidebarOpen(true)}
-          className="text-primary-foreground hover:bg-primary-foreground/10"
-        >
-          <Menu className="h-6 w-6" />
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsSidebarOpen(true)}
+            className="text-primary-foreground hover:bg-primary-foreground/10"
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+        </div>
       </div>
 
       <DashboardSidebar
@@ -99,6 +103,11 @@ export default function Dashboard() {
       />
 
       <main className="md:pl-64">
+        {/* Desktop Header */}
+        <div className="hidden md:flex items-center justify-end p-8 pb-0 max-w-6xl">
+          <ThemeToggle />
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -85,8 +85,21 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         <div className="p-6 sm:p-8">
           {/* Logo */}
           <DialogHeader className="text-center mb-6">
-            <div className="mx-auto h-12 w-12 rounded-xl bg-primary flex items-center justify-center shadow-medium mb-4">
-              <Sparkles className="h-6 w-6 text-primary-foreground" />
+            <div className="flex items-center justify-center mb-6">
+              <img
+                src="/LIGHTMODE.jpg"
+                alt="DABSTACK"
+                className="dark:hidden rounded-xl shadow-sm"
+                width={100}
+                height={80}
+              />
+              <img
+                src="/DARKMODE.png"
+                alt="DABSTACK"
+                className="hidden dark:block rounded-xl shadow-sm"
+                width={100}
+                height={80}
+              />
             </div>
             <DialogTitle className="text-2xl font-bold">
               {mode === "signin"

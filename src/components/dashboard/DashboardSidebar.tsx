@@ -7,13 +7,10 @@ import {
   Settings,
   Shield,
   LogOut,
-  Sparkles,
-  X,
-  Menu
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useNavigate } from "react-router-dom";
 
 interface DashboardSidebarProps {
@@ -36,7 +33,7 @@ export function DashboardSidebar({
   isOpen,
   onClose
 }: DashboardSidebarProps) {
-  const { signOut, isAdmin } = useAuth();
+  const { signOut, isAdmin, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -70,14 +67,21 @@ export function DashboardSidebar({
       >
         {/* Logo & Close Button */}
         <div className="p-8 pb-10 flex items-center justify-between">
-          <div className="flex items-center gap-3 group cursor-pointer">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-300">
-              <Sparkles className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">Dabstack</span>
-              <span className="text-[10px] text-blue-400 uppercase tracking-widest font-semibold">Vision Center</span>
-            </div>
+          <div className="flex items-center group cursor-pointer">
+            <img
+              src="/DARKMODE.png"
+              alt="Dabstack"
+              className="dark:hidden rounded-xl shadow-sm"
+              width={100}
+              height={100}
+            />
+            <img
+              src="/LIGHTMODE.jpg"
+              alt="Dabstack"
+              className="hidden dark:block rounded-xl shadow-sm"
+              width={100}
+              height={100}
+            />
           </div>
 
           {/* Mobile Close Button */}
@@ -159,16 +163,15 @@ export function DashboardSidebar({
         <div className="p-6 border-t border-white/5 space-y-4">
           <div className="flex items-center gap-3 px-2 mb-2">
             <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-slate-700 to-slate-500 flex items-center justify-center text-xs font-bold border border-white/10">
-              {useAuth().user?.email?.charAt(0).toUpperCase()}
+              {user?.email?.charAt(0).toUpperCase()}
             </div>
             <div className="flex flex-col min-w-0">
               <span className="text-sm font-medium truncate text-white/90">Account</span>
-              <span className="text-[10px] text-white/40 truncate">{useAuth().user?.email}</span>
+              <span className="text-[10px] text-white/40 truncate">{user?.email}</span>
             </div>
           </div>
 
           <div className="flex gap-2">
-            <ThemeToggle />
             <Button
               variant="ghost"
               onClick={handleLogout}

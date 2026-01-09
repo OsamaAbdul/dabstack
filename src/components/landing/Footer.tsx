@@ -1,4 +1,4 @@
-import { Github, Twitter, Linkedin, Sparkles } from "lucide-react";
+import { Twitter, Instagram } from "lucide-react";
 import { useState } from "react";
 import { PrivacyPolicyModal, TermsOfServiceModal } from "./LegalModals";
 
@@ -21,9 +21,9 @@ export function Footer() {
 
           {/* Social Links */}
           <div className="flex items-center gap-4">
-            <SocialLink href="#" icon={Twitter} label="Twitter" />
-            <SocialLink href="#" icon={Github} label="Github" />
-            <SocialLink href="#" icon={Linkedin} label="LinkedIn" />
+            <SocialLink href="https://www.x.com/dabstacknigeria" icon={Twitter} label="Twitter" />
+
+            <SocialLink href="https://www.instagram.com/dab.stack" icon={Instagram} label="Instagram" />
           </div>
         </div>
 
@@ -31,8 +31,8 @@ export function Footer() {
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
           <p>© {new Date().getFullYear()} Dabstack. All rights reserved.</p>
           <div className="flex items-center gap-8">
-            <button onClick={() => setShowPrivacy(true)} className="hover:text-white transition-colors">Privacy Policy</button>
-            <button onClick={() => setShowTerms(true)} className="hover:text-white transition-colors">Terms of Service</button>
+            <button onClick={() => setShowPrivacy(true)} className="hover:text-gray-900 dark:hover:text-white transition-colors">Privacy Policy</button>
+            <button onClick={() => setShowTerms(true)} className="hover:text-gray-900 dark:hover:text-white transition-colors">Terms of Service</button>
           </div>
         </div>
       </div>
@@ -47,10 +47,10 @@ function SocialLink({ href, icon: Icon, label }: { href: string; icon: React.Ele
   return (
     <a
       href={href}
-      className="h-12 w-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 hover:scale-110 transition-all duration-300 group"
+      className="h-12 w-12 rounded-full bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-white/20 hover:scale-110 transition-all duration-300 group"
       aria-label={label}
     >
-      <Icon className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" />
+      <Icon className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.3)] dark:group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" />
     </a>
   );
 }

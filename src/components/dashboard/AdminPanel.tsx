@@ -125,12 +125,7 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
           <h2 className="text-3xl font-bold tracking-tight">Admin Dashboard</h2>
           <p className="text-muted-foreground">Comprehensive system oversight and management</p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" className="gap-2">
-            <TrendingUp className="h-4 w-4" />
-            Report
-          </Button>
-        </div>
+
       </div>
 
       {/* Quick Stats */}
