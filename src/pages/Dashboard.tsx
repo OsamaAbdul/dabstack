@@ -32,23 +32,24 @@ export default function Dashboard() {
     }
   }, [user, isLoading, navigate, isAdmin, activeSection]);
 
-  useEffect(() => {
-    async function getProfile() {
-      if (!user) return;
-      try {
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("avatar_url")
-          .eq("user_id", user.id)
-          .single();
+  const getProfile = async () => {
+    if (!user) return;
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("avatar_url")
+        .eq("user_id", user.id)
+        .single();
 
-        if (data) {
-          setAvatarUrl(data.avatar_url);
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
+      if (data) {
+        setAvatarUrl(data.avatar_url);
       }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
     }
+  };
+
+  useEffect(() => {
     getProfile();
   }, [user]);
 
