@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 import {
   LayoutDashboard,
   MessageSquare,
@@ -7,7 +9,10 @@ import {
   Settings,
   Shield,
   LogOut,
-  X
+  X,
+  Cloud,
+  Globe,
+  Cpu
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -35,6 +40,31 @@ export function DashboardSidebar({
 }: DashboardSidebarProps) {
   const { signOut, isAdmin, user } = useAuth();
   const navigate = useNavigate();
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user?.id) {
+      getProfile();
+    }
+  }, [user?.id]);
+
+  const getProfile = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('avatar_url')
+        .eq('id', user?.id)
+        .single();
+
+      if (error) {
+        console.warn('Error loading user profile:', error);
+      } else if (data) {
+        setAvatarUrl(data.avatar_url);
+      }
+    } catch (error) {
+      console.warn('Error loading user profile:', error);
+    }
+  };
 
   const handleLogout = async () => {
     await signOut();
@@ -62,9 +92,34 @@ export function DashboardSidebar({
           duration: 0.25
         }}
         className={cn(
-          "w-64 h-screen bg-[hsl(220,70%,10%)] dark:bg-[hsl(34,41%,84%)] text-[hsl(34,41%,84%)] dark:text-[hsl(220,70%,10%)] flex flex-col fixed left-0 top-0 z-50 md:translate-x-0 border-r border-sidebar-border shadow-2xl transition-colors duration-500"
+          "w-64 h-screen bg-[hsl(220,70%,10%)] dark:bg-[hsl(34,41%,84%)] text-[hsl(34,41%,84%)] dark:text-[hsl(220,70%,10%)] flex flex-col fixed left-0 top-0 z-50 md:translate-x-0 border-r border-sidebar-border shadow-2xl transition-colors duration-500 overflow-hidden"
         )}
       >
+        {/* Floating Icons Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-10">
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-10 -left-4 text-sidebar-foreground"
+          >
+            <Cloud size={60} />
+          </motion.div>
+          <motion.div
+            animate={{ y: [0, 15, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute top-1/2 -right-6 text-sidebar-foreground"
+          >
+            <Globe size={80} />
+          </motion.div>
+          <motion.div
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-20 left-10 text-sidebar-foreground"
+          >
+            <Cpu size={50} />
+          </motion.div>
+        </div>
+
         {/* Logo & Close Button */}
         <div className="p-8 pb-10 flex items-center justify-between">
           <div className="flex items-center group cursor-pointer">
@@ -162,8 +217,12 @@ export function DashboardSidebar({
         {/* Footer */}
         <div className="p-6 border-t border-sidebar-border space-y-4">
           <div className="flex items-center gap-3 px-2 mb-2">
-            <div className="h-8 w-8 rounded-full bg-sidebar-primary/20 flex items-center justify-center text-xs font-bold border border-sidebar-border text-sidebar-foreground">
-              {user?.email?.charAt(0).toUpperCase()}
+            <div className="relative h-10 w-10 rounded-full bg-sidebar-primary/20 flex items-center justify-center text-xs font-bold border border-sidebar-border text-sidebar-foreground overflow-hidden">
+              {avatarUrl ? (
+                <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
+              ) : (
+                <span>{user?.email?.charAt(0).toUpperCase()}</span>
+              )}
             </div>
             <div className="flex flex-col min-w-0">
               <span className="text-sm font-medium truncate text-sidebar-foreground/90">Account</span>

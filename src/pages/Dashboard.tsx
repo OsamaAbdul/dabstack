@@ -12,6 +12,7 @@ import { Loader2, MessageSquare, CreditCard, Settings, Sparkles, Menu } from "lu
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Dashboard() {
   const { user, isAdmin, isLoading } = useAuth();
@@ -19,6 +20,7 @@ export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("projects");
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isLoading) {
@@ -29,6 +31,26 @@ export default function Dashboard() {
       }
     }
   }, [user, isLoading, navigate, isAdmin, activeSection]);
+
+  useEffect(() => {
+    async function getProfile() {
+      if (!user) return;
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("avatar_url")
+          .eq("user_id", user.id)
+          .single();
+
+        if (data) {
+          setAvatarUrl(data.avatar_url);
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    }
+    getProfile();
+  }, [user]);
 
   if (isLoading) {
     return (
@@ -116,8 +138,17 @@ export default function Dashboard() {
 
       <main className="md:pl-64">
         {/* Desktop Header */}
-        <div className="hidden md:flex items-center justify-end p-8 pb-0 max-w-6xl">
+        <div className="hidden md:flex items-center justify-end p-8 pb-0 max-w-6xl gap-4">
           <ThemeToggle />
+          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border border-border">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
+            ) : (
+              <span className="text-sm font-bold text-primary">
+                {user?.email?.charAt(0).toUpperCase()}
+              </span>
+            )}
+          </div>
         </div>
 
         <motion.div
