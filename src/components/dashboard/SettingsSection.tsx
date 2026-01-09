@@ -9,7 +9,11 @@ import { toast } from "sonner";
 import { Loader2, User, Save, Upload } from "lucide-react";
 import { useRef } from "react";
 
-export function SettingsSection() {
+interface SettingsSectionProps {
+    onProfileUpdate?: () => void;
+}
+
+export function SettingsSection({ onProfileUpdate }: SettingsSectionProps) {
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -107,6 +111,7 @@ export function SettingsSection() {
             }
 
             setAvatarUrl(publicUrl);
+            onProfileUpdate?.();
             toast.success("Profile picture updated!");
         } catch (error) {
             console.error('Error uploading avatar:', error);

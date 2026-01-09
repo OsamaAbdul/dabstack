@@ -87,7 +87,7 @@ export default function Dashboard() {
       case "billing":
         return <BillingSection />;
       case "settings":
-        return <SettingsSection />;
+        return <SettingsSection onProfileUpdate={getProfile} />;
       default:
         return <ProjectsSection />;
     }
@@ -134,6 +134,7 @@ export default function Dashboard() {
         }}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
+        avatarUrl={avatarUrl}
       />
 
       <main className="md:pl-64">

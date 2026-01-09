@@ -23,6 +23,7 @@ interface DashboardSidebarProps {
   onSectionChange: (section: string) => void;
   isOpen?: boolean;
   onClose?: () => void;
+  avatarUrl: string | null;
 }
 
 const navItems = [
@@ -36,35 +37,13 @@ export function DashboardSidebar({
   activeSection,
   onSectionChange,
   isOpen,
-  onClose
+  onClose,
+  avatarUrl
 }: DashboardSidebarProps) {
   const { signOut, isAdmin, user } = useAuth();
   const navigate = useNavigate();
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (user?.id) {
-      getProfile();
-    }
-  }, [user?.id]);
 
-  const getProfile = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('avatar_url')
-        .eq('id', user?.id)
-        .single();
-
-      if (error) {
-        console.warn('Error loading user profile:', error);
-      } else if (data) {
-        setAvatarUrl(data.avatar_url);
-      }
-    } catch (error) {
-      console.warn('Error loading user profile:', error);
-    }
-  };
 
   const handleLogout = async () => {
     await signOut();
