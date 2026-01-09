@@ -72,7 +72,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-background transition-colors duration-500">
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-primary text-primary-foreground">
         <div className="flex items-center">

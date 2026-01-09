@@ -7,11 +7,11 @@ export function Footer() {
   const [showTerms, setShowTerms] = useState(false);
 
   return (
-    <footer className="relative bg-[#F8FAFC] dark:bg-[#0A192F] text-gray-900 dark:text-white pt-20 pb-10 overflow-hidden border-t border-gray-200 dark:border-white/10 transition-colors duration-300">
+    <footer className="relative bg-background text-foreground pt-20 pb-10 overflow-hidden border-t border-border transition-colors duration-300">
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[100px]" />
       </div>
 
       <div className="container relative z-10 mx-auto px-6">
@@ -28,11 +28,11 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} Dabstack. All rights reserved.</p>
           <div className="flex items-center gap-8">
-            <button onClick={() => setShowPrivacy(true)} className="hover:text-gray-900 dark:hover:text-white transition-colors">Privacy Policy</button>
-            <button onClick={() => setShowTerms(true)} className="hover:text-gray-900 dark:hover:text-white transition-colors">Terms of Service</button>
+            <button onClick={() => setShowPrivacy(true)} className="hover:text-foreground transition-colors">Privacy Policy</button>
+            <button onClick={() => setShowTerms(true)} className="hover:text-foreground transition-colors">Terms of Service</button>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@ function SocialLink({ href, icon: Icon, label }: { href: string; icon: React.Ele
   return (
     <a
       href={href}
-      className="h-12 w-12 rounded-full bg-gray-200/50 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-white/20 hover:scale-110 transition-all duration-300 group"
+      className="h-12 w-12 rounded-full bg-muted border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 hover:border-border/80 hover:scale-110 transition-all duration-300 group"
       aria-label={label}
     >
       <Icon className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.3)] dark:group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" />

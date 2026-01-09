@@ -16,7 +16,7 @@ export function Navbar({ onGetStarted }: NavbarProps) {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-white/80 dark:bg-[#0A192F]/80 backdrop-blur-md border-b border-gray-200 dark:border-white/10 transition-colors duration-300"
+      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-background/80 backdrop-blur-md border-b border-border transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <motion.div
@@ -47,7 +47,7 @@ export function Navbar({ onGetStarted }: NavbarProps) {
           <ThemeToggle />
           <Button
             variant="ghost"
-            className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/10"
+            className="text-muted-foreground hover:text-foreground hover:bg-muted"
             onClick={onGetStarted}
           >
             Login
@@ -76,7 +76,7 @@ export function Navbar({ onGetStarted }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden overflow-hidden bg-white dark:bg-[#0A192F] border-t border-gray-200 dark:border-white/10 mt-4"
+            className="md:hidden overflow-hidden bg-background border-t border-border mt-4"
           >
             <div className="flex flex-col gap-4 py-4 px-2">
               <Button

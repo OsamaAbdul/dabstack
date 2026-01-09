@@ -8,7 +8,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ onGetStarted }: HeroSectionProps) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#0A192F] pt-20 transition-colors duration-300">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-20 transition-colors duration-300">
       {/* Background Pattern */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
         <div className="absolute inset-0"
@@ -73,10 +73,10 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 text-foreground"
           >
             We Build, Manage & Scale <br className="hidden md:block" />
-            <span className="text-gray-900 dark:text-white">Modern Websites</span>
+            <span className="text-foreground">Modern Websites</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -84,7 +84,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             Design, develop, and manage reliable web solutions.
             <br className="hidden sm:block" />
@@ -110,7 +110,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto h-14 px-8 text-base font-medium rounded-full bg-transparent border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 hover:border-gray-400 dark:hover:border-gray-500 transition-all"
+                className="w-full sm:w-auto h-14 px-8 text-base font-medium rounded-full bg-transparent border-border text-foreground hover:bg-muted transition-all"
               >
                 <MessageCircle className="mr-2 h-5 w-5" />
                 WhatsApp
@@ -121,7 +121,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto h-14 px-8 text-base font-medium rounded-full bg-transparent border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 hover:border-gray-400 dark:hover:border-gray-500 transition-all"
+                className="w-full sm:w-auto h-14 px-8 text-base font-medium rounded-full bg-transparent border-border text-foreground hover:bg-muted transition-all"
               >
                 <Mail className="mr-2 h-5 w-5" />
                 Email Us
