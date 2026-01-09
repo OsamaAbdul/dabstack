@@ -58,9 +58,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         <div className="absolute top-20 right-10 font-mono text-xs text-blue-900/10 dark:text-blue-400/10 hidden md:block">
           {`const build = () => { return "future" }`}
         </div>
-        <div className="absolute bottom-40 left-10 font-mono text-xs text-blue-900/10 dark:text-blue-400/10 hidden md:block">
-          {`import { scale } from 'buildy'`}
-        </div>
+
       </div>
 
       <div className="container mx-auto px-6 py-20 relative z-10">
