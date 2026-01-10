@@ -3,7 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./useAuth";
 import { Database } from "@/integrations/supabase/types";
 
-type Project = Database["public"]["Tables"]["projects"]["Row"];
+type Project = Database["public"]["Tables"]["projects"]["Row"] & {
+  messages: { created_at: string }[];
+};
 type ProjectInsert = Database["public"]["Tables"]["projects"]["Insert"];
 type ProjectStatus = Database["public"]["Enums"]["project_status"];
 
@@ -18,7 +20,7 @@ export function useProjects() {
     setIsLoading(true);
     const { data, error } = await supabase
       .from("projects")
-      .select("*")
+      .select("*, messages(created_at)")
       .order("created_at", { ascending: false });
 
     if (!error && data) {
@@ -44,7 +46,7 @@ export function useProjects() {
       .single();
 
     if (!error) {
-      setProjects((prev) => [data, ...prev]);
+      setProjects((prev) => [{ ...data, messages: [] }, ...prev]);
     }
 
     return { data, error };
@@ -65,11 +67,27 @@ export function useProjects() {
     return { error };
   };
 
+  const updateProjectDetails = async (projectId: string, updates: Partial<Project>) => {
+    const { error } = await supabase
+      .from("projects")
+      .update(updates)
+      .eq("id", projectId);
+
+    if (!error) {
+      setProjects((prev) =>
+        prev.map((p) => (p.id === projectId ? { ...p, ...updates } : p))
+      );
+    }
+
+    return { error };
+  };
+
   return {
     projects,
     isLoading,
     createProject,
     updateProjectStatus,
+    updateProjectDetails,
     refetch: fetchProjects,
   };
 }

@@ -8,7 +8,7 @@ import { MessagingSection } from "@/components/dashboard/MessagingSection";
 import { BillingSection } from "@/components/dashboard/BillingSection";
 import { SettingsSection } from "@/components/dashboard/SettingsSection";
 import { useAuth } from "@/hooks/useAuth";
-import { Loader2, MessageSquare, CreditCard, Settings, Sparkles, Menu } from "lucide-react";
+import { Loader2, MessageSquare, CreditCard, Settings, Sparkles, Menu, Bell } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
@@ -21,6 +21,7 @@ export default function Dashboard() {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     if (!isLoading) {
@@ -53,6 +54,61 @@ export default function Dashboard() {
     getProfile();
   }, [user]);
 
+  useEffect(() => {
+    if (!user) return;
+
+    // 1. Get last checked time
+    const lastChecked = localStorage.getItem("last_checked_messages");
+    const lastCheckedDate = lastChecked ? new Date(lastChecked) : new Date(0); // Default to epoch if never checked
+
+    // 2. Initial count
+    const fetchUnread = async () => {
+      const { count, error } = await supabase
+        .from("messages")
+        .select("*", { count: "exact", head: true })
+        .gt("created_at", lastCheckedDate.toISOString())
+        .neq("sender_id", user.id); // Don't count own messages
+
+      if (!error && count !== null) {
+        setUnreadCount(count);
+      }
+    };
+
+    fetchUnread();
+
+    // 3. Subscription
+    const channel = supabase
+      .channel("global-messages")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+        },
+        (payload) => {
+          const newMessage = payload.new as any; // Type assertion for simplicity
+          if (newMessage.sender_id !== user.id) {
+            setUnreadCount((prev) => prev + 1);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
+
+  const handleNotificationClick = () => {
+    setUnreadCount(0);
+    localStorage.setItem("last_checked_messages", new Date().toISOString());
+    // Optionally navigate to messages
+    if (activeSection !== "messages") {
+      setActiveSection("messages");
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -68,7 +124,16 @@ export default function Dashboard() {
   const renderSection = () => {
     switch (activeSection) {
       case "projects":
-        return <ProjectsSection />;
+        return (
+          <ProjectsSection
+            onProjectSelect={(projectId) => {
+              // Mark as viewed immediately
+              localStorage.setItem(`last_viewed_project_${projectId}`, new Date().toISOString());
+              setSelectedProjectId(projectId);
+              setActiveSection("messages");
+            }}
+          />
+        );
       case "admin":
         return (
           <AdminPanel
@@ -90,7 +155,15 @@ export default function Dashboard() {
       case "settings":
         return <SettingsSection onProfileUpdate={getProfile} />;
       default:
-        return <ProjectsSection />;
+        return (
+          <ProjectsSection
+            onProjectSelect={(projectId) => {
+              localStorage.setItem(`last_viewed_project_${projectId}`, new Date().toISOString());
+              setSelectedProjectId(projectId);
+              setActiveSection("messages");
+            }}
+          />
+        );
     }
   };
 
@@ -141,6 +214,17 @@ export default function Dashboard() {
       <main className="md:pl-64">
         {/* Desktop Header */}
         <div className="hidden md:flex items-center justify-end p-8 pb-0 max-w-6xl gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative text-muted-foreground hover:text-foreground"
+            onClick={handleNotificationClick}
+          >
+            <Bell className="h-5 w-5" />
+            {unreadCount > 0 && (
+              <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-600 animate-pulse" />
+            )}
+          </Button>
           <ThemeToggle />
           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border border-border">
             {avatarUrl ? (

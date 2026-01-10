@@ -26,6 +26,9 @@ import { useUsers } from "@/hooks/useUsers";
 import { Database } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { format, startOfMonth, subMonths } from "date-fns";
 import {
   BarChart,
@@ -61,10 +64,38 @@ const statusLabels: Record<ProjectStatus, string> = {
 };
 
 export function AdminPanel({ onOpenChat }: AdminPanelProps) {
-  const { projects, updateProjectStatus } = useProjects();
+  const { projects, updateProjectStatus, updateProjectDetails } = useProjects();
   const { users, isLoading: usersLoading, updateUserRole } = useUsers();
   const { onlineUsers } = usePresence();
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [editBudget, setEditBudget] = useState("");
+
+  const handleEditClick = (project: Project) => {
+    setEditingProject(project);
+    setEditBudget(project.budget?.toString() || "");
+  };
+
+  const handleSaveBudget = async () => {
+    if (!editingProject) return;
+
+    const numericBudget = parseFloat(editBudget.replace(/,/g, ''));
+    if (isNaN(numericBudget)) {
+      toast.error("Invalid budget amount");
+      return;
+    }
+
+    setLoadingStates(prev => ({ ...prev, [`edit-${editingProject.id}`]: true }));
+    const { error } = await updateProjectDetails(editingProject.id, { budget: numericBudget });
+
+    if (!error) {
+      toast.success("Budget Updated");
+      setEditingProject(null);
+    } else {
+      toast.error("Failed to update budget");
+    }
+    setLoadingStates(prev => ({ ...prev, [`edit-${editingProject.id}`]: false }));
+  };
 
   const handleMarkPaid = async (project: Project) => {
     setLoadingStates((prev) => ({ ...prev, [`paid-${project.id}`]: true }));
@@ -112,7 +143,7 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
   }, [projects]);
 
   const stats = [
-    { label: "Total Revenue", value: `₦${projects.reduce((acc, p) => acc + (p.budget || 0), 0).toLocaleString()}`, icon: Banknote, color: "text-green-500 bg-green-500/10" },
+    { label: "Total Revenue", value: `₦${projects.filter(p => p.status === 'in_progress' || p.status === 'completed').reduce((acc, p) => acc + (p.budget || 0), 0).toLocaleString()}`, icon: Banknote, color: "text-green-500 bg-green-500/10" },
     { label: "Total Users", value: users.length, icon: UsersIcon, color: "text-blue-500 bg-blue-500/10" },
     { label: "Total Clients", value: users.filter(u => u.role === 'user').length, icon: Briefcase, color: "text-purple-500 bg-purple-500/10" },
     { label: "Completed Projects", value: projects.filter(p => p.status === "completed").length, icon: CheckCircle, color: "text-orange-500 bg-orange-500/10" },
@@ -180,9 +211,12 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
                             </Badge>
                           </div>
                           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 group/budget cursor-pointer" onClick={() => handleEditClick(project)}>
                               <Banknote className="h-4 w-4 text-green-500/70" />
                               <span className="font-semibold text-foreground">₦{Number(project.budget || 0).toLocaleString()}</span>
+                              <div className="opacity-0 group-hover/budget:opacity-100 transition-opacity bg-muted p-1 rounded-md ml-1">
+                                <span className="text-[10px] text-muted-foreground flex items-center gap-1">Edit <MoreHorizontal className="h-3 w-3" /></span>
+                              </div>
                             </div>
                             <div className="flex items-center gap-1">
                               <Clock className="h-4 w-4" />
@@ -381,6 +415,35 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
           </div>
         </TabsContent>
       </Tabs>
+      <Dialog open={!!editingProject} onOpenChange={(open) => !open && setEditingProject(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Project Budget</DialogTitle>
+            <DialogDescription>
+              Update the agreed budget for this project.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="budget">Budget Amount (₦)</Label>
+              <Input
+                id="budget"
+                value={editBudget}
+                onChange={(e) => setEditBudget(e.target.value)}
+                placeholder="e.g. 500000"
+                type="number"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditingProject(null)}>Cancel</Button>
+            <Button onClick={handleSaveBudget} disabled={editingProject ? loadingStates[`edit-${editingProject.id}`] : false}>
+              {editingProject && loadingStates[`edit-${editingProject.id}`] ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

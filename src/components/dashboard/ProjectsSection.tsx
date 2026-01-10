@@ -10,7 +10,11 @@ import { OnboardingFlow, OnboardingData } from "@/components/onboarding/Onboardi
 import { useProjects } from "@/hooks/useProjects";
 import { toast } from "sonner";
 
-export function ProjectsSection() {
+interface ProjectsSectionProps {
+  onProjectSelect?: (projectId: string) => void;
+}
+
+export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
   const { projects, isLoading, createProject } = useProjects();
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -34,7 +38,16 @@ export function ProjectsSection() {
     } else {
       // Send initial onboarding message
       if (newProject) {
-        const messageContent = `**New Projects Started** 🚀\n\n**Type:** ${data.type}\n**Audience:** ${data.targetAudience.join(", ")}\n**Budget:** ₦${data.budget.toLocaleString()}\n**Timeline:** ${data.timeline ? data.timeline.toLocaleDateString() : 'Not specified'}`;
+        const messageContent = `**🚀 New Project Initiated**
+
+We've successfully kickstarted your new **${data.type}** project. Here's the snapshot of what we're building:
+
+**📋 Project Details**
+• **Target Audience:** ${data.targetAudience.join(", ")}
+• **Budget Allocation:** ₦${data.budget.toLocaleString()}
+• **Timeline Target:** ${data.timeline ? data.timeline.toLocaleDateString() : 'Not specified'}
+
+*Our team has been notified and will review your requirements shortly.*`;
 
         await supabase.from("messages").insert({
           project_id: newProject.id,
@@ -109,7 +122,19 @@ export function ProjectsSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard
+                project={project}
+                onClick={() => onProjectSelect?.(project.id)}
+                hasUnread={(() => {
+                  const lastMessage = project.messages?.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0];
+                  if (!lastMessage) return false;
+
+                  const lastViewed = localStorage.getItem(`last_viewed_project_${project.id}`);
+                  if (!lastViewed) return true; // Never viewed, has message -> Unread
+
+                  return new Date(lastMessage.created_at) > new Date(lastViewed);
+                })()}
+              />
             </motion.div>
           ))}
         </div>

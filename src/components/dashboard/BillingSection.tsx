@@ -9,11 +9,11 @@ export function BillingSection() {
     const { projects, isLoading } = useProjects();
 
     const totalSpent = projects
-        .filter(p => p.status !== 'onboarding')
+        .filter(p => p.status === 'in_progress' || p.status === 'completed')
         .reduce((acc, current) => acc + (current.budget || 0), 0);
 
     const pendingAmount = projects
-        .filter(p => p.status === 'onboarding')
+        .filter(p => p.status === 'onboarding' || p.status === 'review')
         .reduce((acc, current) => acc + (current.budget || 0), 0);
 
     if (isLoading) {
@@ -58,7 +58,7 @@ export function BillingSection() {
                         ₦{pendingAmount.toLocaleString()}
                     </div>
                     <p className="text-sm mt-2 text-muted-foreground">
-                        Estimated budget for projects in onboarding
+                        Estimated budget for projects in review & onboarding
                     </p>
                 </Card>
             </div>

@@ -14,12 +14,15 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { Database } from "@/integrations/supabase/types";
 
-type Project = Database["public"]["Tables"]["projects"]["Row"];
+type Project = Database["public"]["Tables"]["projects"]["Row"] & {
+  messages?: { created_at: string }[];
+};
 type ProjectStatus = Database["public"]["Enums"]["project_status"];
 
 interface ProjectCardProps {
   project: Project;
   onClick?: () => void;
+  hasUnread?: boolean;
 }
 
 const typeIcons: Record<string, typeof Layers> = {
@@ -43,7 +46,7 @@ const statusLabels: Record<ProjectStatus, string> = {
   completed: "Completed",
 };
 
-export function ProjectCard({ project, onClick }: ProjectCardProps) {
+export function ProjectCard({ project, onClick, hasUnread }: ProjectCardProps) {
   const Icon = typeIcons[project.type] || Layers;
 
   return (
@@ -56,8 +59,11 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
         onClick={onClick}
       >
         <div className="flex items-start justify-between mb-4">
-          <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+          <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center relative">
             <Icon className="h-6 w-6 text-primary" />
+            {hasUnread && (
+              <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-600 rounded-full border-2 border-background animate-pulse" />
+            )}
           </div>
           <Badge
             variant="outline"
