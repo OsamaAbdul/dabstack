@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Navbar } from "@/components/landing/Navbar";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { Footer } from "@/components/landing/Footer";
+import { About } from "@/components/landing/About";
 import { AuthModal } from "@/components/auth/AuthModal";
 
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
@@ -19,6 +20,7 @@ const Index = () => {
       <Navbar onGetStarted={handleGetStarted} />
       <main>
         <HeroSection onGetStarted={handleGetStarted} />
+        <About />
 
         <HowItWorksSection />
 
