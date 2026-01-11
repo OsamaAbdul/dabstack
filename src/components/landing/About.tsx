@@ -31,27 +31,27 @@ export function About() {
                             transition={{ duration: 0.6 }}
                         >
                             <h2 className="text-sm font-semibold text-blue-600 dark:text-blue-400 tracking-wider uppercase mb-3">
-                                About Dabstack
+                                Our Expertise
                             </h2>
                             <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
-                                Empowering Agencies with <span className="text-blue-600 dark:text-blue-400">Next-Gen Project Management</span>
+                                Building & Managing <span className="text-blue-600 dark:text-blue-400">World-Class Digital Products</span>
                             </h3>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                At Dabstack, we believe that managing complex digital projects shouldn't be complicated. We provide a comprehensive ecosystem designed specifically for digital agencies and their clients, streamlining communication, project tracking, and financial management into a single, intuitive interface.
+                                We are a full-service development partner dedicated to bringing your digital vision to life. From complex SaaS platforms and high-conversion e-commerce stores to seamless mobile applications, we handle the entire lifecycle of your product.
                             </p>
                             <br />
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                Founded with a vision to bridge the gap between technical execution and client transparency, our platform acts as the "Mission Control" for your digital operations. Whether you are scaling up a startup or managing a global enterprise, Dabstack provides the clarity and control you need to succeed.
+                                Our team of expert developers and product managers ensures that every solution we build is scalable, secure, and professionally managed, allowing you to focus on growing your business while we handle the technology.
                             </p>
                         </motion.div>
 
                         {/* Values / Features Grid based on text content */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
                             {[
-                                "Transparent Workflows",
-                                "Real-time Collaboration",
-                                "Secure Asset Management",
-                                "Automated Billing"
+                                "Custom Web Applications",
+                                "Scalable SaaS Platforms",
+                                "Native Mobile Apps",
+                                "E-commerce Solutions"
                             ].map((item, index) => (
                                 <motion.div
                                     key={index}
