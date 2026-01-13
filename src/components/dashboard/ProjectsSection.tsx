@@ -24,7 +24,7 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
 
     const { data: newProject, error } = await createProject({
       type: data.type,
-      target_audience: data.targetAudience.join(", "),
+      target_audience: data.targetAudience,
       budget: data.budget,
       timeline: data.timeline?.toISOString().split("T")[0] || null,
       status: "review",
@@ -43,7 +43,7 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
 We've successfully kickstarted your new **${data.type}** project. Here's the snapshot of what we're building:
 
 **📋 Project Details**
-• **Target Audience:** ${data.targetAudience.join(", ")}
+• **Target Audience:** ${data.targetAudience}
 • **Budget Allocation:** ₦${data.budget.toLocaleString()}
 • **Timeline Target:** ${data.timeline ? data.timeline.toLocaleDateString() : 'Not specified'}
 

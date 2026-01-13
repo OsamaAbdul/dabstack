@@ -28,7 +28,7 @@ interface OnboardingFlowProps {
 
 export interface OnboardingData {
   type: string;
-  targetAudience: string[];
+  targetAudience: string;
   budget: number;
   timeline: Date | null;
 }
@@ -61,11 +61,10 @@ export function OnboardingFlow({ onComplete, isLoading }: OnboardingFlowProps) {
   const [[step, direction], setStep] = useState([0, 0]);
   const [data, setData] = useState<OnboardingData>({
     type: "",
-    targetAudience: [],
+    targetAudience: "",
     budget: 500000,
     timeline: null,
   });
-  const [tagInput, setTagInput] = useState("");
 
   const paginate = (newDirection: number) => {
     setStep([step + newDirection, newDirection]);
@@ -75,24 +74,8 @@ export function OnboardingFlow({ onComplete, isLoading }: OnboardingFlowProps) {
     setData((prev) => ({ ...prev, type }));
   };
 
-  const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput.trim()) {
-      e.preventDefault();
-      if (!data.targetAudience.includes(tagInput.trim())) {
-        setData((prev) => ({
-          ...prev,
-          targetAudience: [...prev.targetAudience, tagInput.trim()],
-        }));
-      }
-      setTagInput("");
-    }
-  };
-
-  const handleRemoveTag = (tag: string) => {
-    setData((prev) => ({
-      ...prev,
-      targetAudience: prev.targetAudience.filter((t) => t !== tag),
-    }));
+  const handleAudienceChange = (audience: string) => {
+    setData((prev) => ({ ...prev, targetAudience: audience }));
   };
 
   const canProceed = () => {
@@ -100,7 +83,7 @@ export function OnboardingFlow({ onComplete, isLoading }: OnboardingFlowProps) {
       case 0:
         return !!data.type;
       case 1:
-        return data.targetAudience.length > 0;
+        return !!data.targetAudience.trim();
       case 2:
         return true;
       default:
@@ -190,36 +173,14 @@ export function OnboardingFlow({ onComplete, isLoading }: OnboardingFlowProps) {
               </div>
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="audience">Add audience tags</Label>
+                  <Label htmlFor="audience">Audience Description</Label>
                   <Input
                     id="audience"
-                    placeholder="Press Enter to add (e.g., 'Small businesses')"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    onKeyDown={handleAddTag}
+                    placeholder="e.g., Small business owners, Student entrepreneurs..."
+                    value={data.targetAudience}
+                    onChange={(e) => handleAudienceChange(e.target.value)}
                     className="mt-2"
                   />
-                </div>
-                <div className="flex flex-wrap gap-2 min-h-[48px]">
-                  <AnimatePresence>
-                    {data.targetAudience.map((tag) => (
-                      <motion.div
-                        key={tag}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                      >
-                        <Badge
-                          variant="secondary"
-                          className="px-3 py-1.5 text-sm cursor-pointer hover:bg-destructive/20"
-                          onClick={() => handleRemoveTag(tag)}
-                        >
-                          {tag}
-                          <X className="ml-2 h-3 w-3" />
-                        </Badge>
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
                 </div>
               </div>
             </div>
