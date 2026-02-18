@@ -1,4 +1,16 @@
-import { Twitter, Instagram } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  Twitter,
+  Instagram,
+  Youtube,
+  Linkedin,
+  Phone,
+  Mail,
+  MapPin,
+  ChevronRight,
+  Code,
+  Layout
+} from "lucide-react";
 import { useState } from "react";
 import { PrivacyPolicyModal, TermsOfServiceModal } from "./LegalModals";
 
@@ -6,33 +18,156 @@ export function Footer() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
 
+  const socialLinks = [
+    { icon: Twitter, href: "https://www.x.com/dabstacknigeria", label: "Twitter" },
+    { icon: Instagram, href: "https://www.instagram.com/dab.stack", label: "Instagram" },
+    { icon: Youtube, href: "#", label: "Youtube" },
+    { icon: Linkedin, href: "#", label: "LinkedIn" },
+  ];
+
+  const quickLinks = [
+    { label: "Portfolio", href: "#portfolio" },
+    { label: "Tech Stack", href: "#tech-stack" },
+    { label: "About Us", href: "#about" },
+    { label: "Contact Us", href: "#contact" },
+  ];
+
+  const services = [
+    { label: "Web Development", href: "#" },
+    { label: "Mobile App Design", href: "#" },
+    { label: "SEO Optimization", href: "#" },
+    { label: "SM Management", href: "#" },
+  ];
+
   return (
-    <footer className="relative bg-background text-foreground pt-20 pb-10 overflow-hidden border-t border-border transition-colors duration-300">
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[100px]" />
-      </div>
+    <footer className="bg-background border-t border-border text-foreground pt-24 pb-12 relative overflow-hidden transition-colors duration-300">
+      {/* Subtle brand glow - keeping it subtle to match Dabstack aesthetic */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px] -mr-64 -mt-64 pointer-events-none opacity-50" />
 
-      <div className="container relative z-10 mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-10 mb-16">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
 
-          {/* Brand section removed as per user request */}
+          {/* Brand Column */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <img
+                src="/LIGHTMODE.jpg"
+                alt="DABSTACK"
+                className="dark:hidden rounded-lg shadow-sm h-12 w-auto"
+              />
+              <img
+                src="/DARKMODE.png"
+                alt="DABSTACK"
+                className="hidden dark:block rounded-lg shadow-sm h-12 w-auto"
+              />
+            </div>
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
+              Dabstack Solution Limited is a premier web design and development company. We specialize in building high-performance digital solutions that empower businesses to scale and dominate their markets through innovation and excellence.
+            </p>
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-red-600 hover:scale-110 transition-all duration-300 border border-border group"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <social.icon className="w-5 h-5 text-muted-foreground group-hover:text-white transition-colors" />
+                </a>
+              ))}
+            </div>
+          </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
-            <SocialLink href="https://www.x.com/dabstacknigeria" icon={Twitter} label="Twitter" />
+          {/* Quick Links Column */}
+          <div>
+            <h4 className="text-lg font-bold mb-8 relative inline-block text-foreground uppercase tracking-wider">
+              Quick Links
+              <span className="absolute -bottom-2 left-0 w-8 h-1 bg-red-600 rounded-full" />
+            </h4>
+            <ul className="space-y-4">
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-muted-foreground hover:text-red-600 flex items-center gap-2 transition-colors duration-200 group"
+                  >
+                    <ChevronRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <SocialLink href="https://www.instagram.com/dab.stack" icon={Instagram} label="Instagram" />
+          {/* Services Column */}
+          <div>
+            <h4 className="text-lg font-bold mb-8 relative inline-block text-foreground uppercase tracking-wider">
+              Our Services
+              <span className="absolute -bottom-2 left-0 w-8 h-1 bg-red-600 rounded-full" />
+            </h4>
+            <ul className="space-y-4">
+              {services.map((service) => (
+                <li key={service.label}>
+                  <a
+                    href={service.href}
+                    className="text-muted-foreground hover:text-red-600 flex items-center gap-2 transition-colors duration-200 group"
+                  >
+                    <ChevronRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                    {service.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div className="space-y-8">
+            <div>
+              <h4 className="text-lg font-bold mb-8 relative inline-block text-foreground uppercase tracking-wider">
+                Contact Info
+                <span className="absolute -bottom-2 left-0 w-8 h-1 bg-red-600 rounded-full" />
+              </h4>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-4 text-muted-foreground group cursor-pointer hover:text-foreground transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/10 group-hover:text-red-600 transition-all">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <span className="mt-2">+234 814 888 2303</span>
+                </li>
+                <li className="flex items-start gap-4 text-muted-foreground group cursor-pointer hover:text-foreground transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/10 group-hover:text-red-600 transition-all">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <span className="mt-2 text-sm break-all">contact@dabstack.com.ng</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-sm font-bold mb-4 text-foreground/70 uppercase tracking-widest">Global Offices</h4>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-muted-foreground text-sm">
+                  <MapPin className="w-4 h-4 text-red-600 mt-1 flex-shrink-0" />
+                  <span>Otta road, Ijora Olopa, Lagos</span>
+                </li>
+                <li className="flex items-start gap-3 text-muted-foreground text-sm">
+                  <MapPin className="w-4 h-4 text-red-600 mt-1 flex-shrink-0" />
+                  <span>Gwarinpa, F.C.T Abuja</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Dabstack. All rights reserved.</p>
-          <div className="flex items-center gap-8">
-            <button onClick={() => setShowPrivacy(true)} className="hover:text-foreground transition-colors">Privacy Policy</button>
-            <button onClick={() => setShowTerms(true)} className="hover:text-foreground transition-colors">Terms of Service</button>
+        {/* Bottom copyright and legal */}
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
+          <p className="text-muted-foreground">
+            © {new Date().getFullYear()} <span className="text-foreground font-semibold">Dabstack</span>. All rights reserved.
+          </p>
+          <div className="flex items-center gap-8 text-muted-foreground">
+            <button onClick={() => setShowPrivacy(true)} className="hover:text-red-600 transition-colors">Privacy Policy</button>
+            <button onClick={() => setShowTerms(true)} className="hover:text-red-600 transition-colors">Terms of Service</button>
           </div>
         </div>
       </div>
@@ -40,17 +175,5 @@ export function Footer() {
       <PrivacyPolicyModal isOpen={showPrivacy} onClose={() => setShowPrivacy(false)} />
       <TermsOfServiceModal isOpen={showTerms} onClose={() => setShowTerms(false)} />
     </footer>
-  );
-}
-
-function SocialLink({ href, icon: Icon, label }: { href: string; icon: React.ElementType; label: string }) {
-  return (
-    <a
-      href={href}
-      className="h-12 w-12 rounded-full bg-muted border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 hover:border-border/80 hover:scale-110 transition-all duration-300 group"
-      aria-label={label}
-    >
-      <Icon className="h-5 w-5 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.3)] dark:group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" />
-    </a>
   );
 }

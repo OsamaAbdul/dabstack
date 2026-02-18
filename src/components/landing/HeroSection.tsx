@@ -1,12 +1,48 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Mail, Cloud, Globe, Cpu } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface HeroSectionProps {
   onGetStarted: () => void;
 }
 
 export function HeroSection({ onGetStarted }: HeroSectionProps) {
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopIndex, setLoopIndex] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(100);
+
+  const strings = [
+    "Design, develop, and manage reliable web solutions.",
+    "Scale without the stress of hiring in-house developers."
+  ];
+
+  useEffect(() => {
+    const handleType = () => {
+      const currentString = strings[loopIndex % strings.length];
+      const updatedText = isDeleting
+        ? currentString.substring(0, displayText.length - 1)
+        : currentString.substring(0, displayText.length + 1);
+
+      setDisplayText(updatedText);
+
+      if (!isDeleting && updatedText === currentString) {
+        setTypingSpeed(3000); // Wait before starting delete
+        setIsDeleting(true);
+      } else if (isDeleting && updatedText === "") {
+        setIsDeleting(false);
+        setLoopIndex(loopIndex + 1);
+        setTypingSpeed(500); // Pause before next string
+      } else {
+        setTypingSpeed(isDeleting ? 50 : 100);
+      }
+    };
+
+    const timer = setTimeout(handleType, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, loopIndex, typingSpeed, strings]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-20 transition-colors duration-300">
       {/* Background Pattern */}
@@ -64,8 +100,6 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
       <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
 
-          {/* Logo/Brand placeholder if needed, usually handled by Navbar, but hero focus is text */}
-
           {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -77,17 +111,21 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
             <span className="text-foreground">Modern Websites</span>
           </motion.h1>
 
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            Design, develop, and manage reliable web solutions.
-            <br className="hidden sm:block" />
-            Scale without the stress of hiring in-house developers.
-          </motion.p>
+          {/* Subheadline (Typewriter) */}
+          <div className="h-24 sm:h-16 mb-12 flex items-center justify-center">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium"
+            >
+              {displayText}
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                className="inline-block w-[2px] h-[1.2em] bg-red-600 ml-1 translate-y-1"
+              />
+            </motion.p>
+          </div>
 
           {/* CTA Buttons */}
           <motion.div
