@@ -210,29 +210,32 @@ export function DashboardSidebar({
         </nav>
 
         {/* Footer */}
-        <div className="p-6 border-t border-sidebar-border space-y-4">
-          <div className="flex items-center gap-3 px-2 mb-2">
-            <div className="relative h-10 w-10 rounded-full bg-sidebar-primary/20 flex items-center justify-center text-xs font-bold border border-sidebar-border text-sidebar-foreground overflow-hidden">
+        <div className="p-6 border-t border-sidebar-border bg-sidebar/50 backdrop-blur-md relative z-10">
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="flex items-center gap-3 px-3 py-3 mb-4 rounded-2xl bg-white/5 border border-white/10 shadow-lg transition-all"
+          >
+            <div className="relative h-12 w-12 rounded-full ring-2 ring-primary/20 flex items-center justify-center text-sm font-bold border border-white/20 text-white overflow-hidden bg-primary/10">
               {avatarUrl ? (
                 <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
               ) : (
-                <span>{user?.email?.charAt(0).toUpperCase()}</span>
+                <span className="font-serif italic">{user?.email?.charAt(0).toUpperCase()}</span>
               )}
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="text-sm font-medium truncate text-sidebar-foreground/90">Account</span>
-              <span className="text-[10px] text-sidebar-foreground/40 truncate">{user?.email}</span>
+              <span className="text-sm font-serif italic font-bold truncate text-white">Account</span>
+              <span className="text-[10px] text-white/60 truncate font-medium">{user?.email}</span>
             </div>
-          </div>
+          </motion.div>
 
           <div className="flex gap-2">
             <Button
               variant="ghost"
               onClick={handleLogout}
-              className="flex-1 justify-start gap-3 text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-foreground/10 rounded-xl"
+              className="flex-1 justify-start gap-3 h-12 px-4 text-white/70 hover:text-primary hover:bg-primary/10 rounded-xl transition-all border border-transparent hover:border-primary/20"
             >
-              <LogOut className="h-4 w-4" />
-              <span className="text-sm">Log out</span>
+              <LogOut className="h-5 w-5 text-primary" />
+              <span className="text-sm font-bold">Log out</span>
             </Button>
           </div>
         </div>
