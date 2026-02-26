@@ -95,7 +95,7 @@ export function About() {
                 className="absolute bottom-0 -left-20 w-[600px] h-[600px] bg-red-800/5 rounded-full blur-[150px] pointer-events-none"
             />
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto px-6 md:pl-24 md:pr-12 relative z-10">
                 {/* Header */}
                 <div className="text-center mb-20">
                     <motion.span

@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin, Send } from "lucide-react";
 export function ContactSection() {
     return (
         <section className="py-24 bg-background relative" id="contact">
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6 md:pl-24 md:pr-12">
                 <div className="max-w-5xl mx-auto bg-card rounded-[3rem] overflow-hidden border border-border/40 shadow-2xl flex flex-col lg:flex-row">
 
                     {/* Contact Info Side */}

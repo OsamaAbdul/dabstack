@@ -18,7 +18,7 @@ const technologies = [
 export function TechStack() {
     return (
         <section className="py-24 bg-background relative overflow-hidden" id="tech-stack">
-            <div className="container mx-auto px-6 text-center">
+            <div className="container mx-auto px-6 md:pl-24 md:pr-12">
                 {/* Header */}
                 <div className="mb-16">
                     <motion.span

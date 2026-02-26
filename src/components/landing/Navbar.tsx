@@ -32,14 +32,14 @@ export function Navbar({ onGetStarted }: NavbarProps) {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-6xl pointer-events-auto"
       >
-        <div className="bg-black/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/10 dark:border-white/5 rounded-[40px] px-8 py-3 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div className="bg-black/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/10 dark:border-white/5 rounded-[40px] px-6 sm:px-12 py-3 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 
           {/* Logo */}
           <motion.div
-            className="flex items-center gap-2 flex-shrink-0"
+            className="flex items-center gap-4 flex-shrink-0"
             whileHover={{ scale: 1.05 }}
           >
-            <a href="/" className="flex items-center gap-2">
+            <a href="/" className="flex items-center gap-4">
               <img
                 src="/DARKMODE.png"
                 alt="DABSTACK"

@@ -64,7 +64,7 @@ const projects = [
 export function Portfolio() {
     return (
         <section className="py-24 bg-background relative overflow-hidden" id="portfolio">
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6 md:pl-24 md:pr-12">
                 {/* Header */}
                 <div className="text-center mb-16">
                     <motion.span

@@ -58,11 +58,11 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         />
 
         {/* Premium Overlays & Glassmorphism - Horizontal Gradient for visibility */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/80 to-transparent dark:via-background/70" />
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-background/95" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/40 to-transparent dark:via-background/70 transition-colors duration-500" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-background/60 dark:to-background/95 transition-colors duration-500" />
 
         {/* Subtle Paper/Grain Texture for Light Mode to reduce "whiteness" */}
-        <div className="absolute inset-0 z-10 opacity-[0.03] dark:opacity-0 pointer-events-none mix-blend-multiply"
+        <div className="absolute inset-0 z-10 opacity-[0.06] dark:opacity-0 pointer-events-none mix-blend-multiply"
           style={{ backgroundImage: `url('https://www.transparenttextures.com/patterns/asfalt-dark.png')` }} />
 
         {/* Animated Glow Blobs for "Premium" feel - Now in Red/Rose hues */}
@@ -106,7 +106,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         </motion.div>
       </div>
 
-      <div className="container mx-auto px-6 py-20 relative z-10 mt-10">
+      <div className="container mx-auto px-6 md:pl-24 md:pr-12 relative z-10 mt-10">
         <div className="max-w-4xl text-left">
 
           {/* Headline */}

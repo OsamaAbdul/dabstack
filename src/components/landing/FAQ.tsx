@@ -72,7 +72,7 @@ export function FAQ() {
 
     return (
         <section className="py-24 bg-background relative" id="faq">
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6 md:pl-24 md:pr-12">
                 {/* Header */}
                 <div className="text-center mb-16">
                     <motion.span
