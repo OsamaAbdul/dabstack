@@ -71,29 +71,40 @@ export function DashboardSidebar({
           duration: 0.25
         }}
         className={cn(
-          "w-64 h-screen bg-[hsl(220,70%,10%)] dark:bg-[hsl(34,41%,84%)] text-[hsl(34,41%,84%)] dark:text-[hsl(220,70%,10%)] flex flex-col fixed left-0 top-0 z-50 md:translate-x-0 border-r border-sidebar-border shadow-2xl transition-colors duration-500 overflow-hidden"
+          "w-64 h-screen bg-sidebar text-sidebar-foreground flex flex-col fixed left-0 top-0 z-50 md:translate-x-0 border-r border-sidebar-border shadow-2xl transition-colors duration-500 overflow-hidden"
         )}
       >
+        {/* Hero Background Image Integration */}
+        <div
+          className="absolute inset-0 z-0 opacity-40 dark:opacity-30"
+          style={{
+            backgroundImage: `url('/wmremove-transformed.webp')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-sidebar via-sidebar/80 to-sidebar" />
+
         {/* Floating Icons Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-10">
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-[0.03]">
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-10 -left-4 text-sidebar-foreground"
+            className="absolute top-10 -left-4 text-primary"
           >
             <Cloud size={60} />
           </motion.div>
           <motion.div
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute top-1/2 -right-6 text-sidebar-foreground"
+            className="absolute top-1/2 -right-6 text-primary"
           >
             <Globe size={80} />
           </motion.div>
           <motion.div
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-20 left-10 text-sidebar-foreground"
+            className="absolute bottom-20 left-10 text-primary"
           >
             <Cpu size={50} />
           </motion.div>
@@ -101,21 +112,26 @@ export function DashboardSidebar({
 
         {/* Logo & Close Button */}
         <div className="p-8 pb-10 flex items-center justify-between">
-          <div className="flex items-center group cursor-pointer">
-            <img
-              src="/DARKMODE.png"
-              alt="Dabstack"
-              className="dark:hidden rounded-xl shadow-sm"
-              width={100}
-              height={100}
-            />
-            <img
-              src="/LIGHTMODE.jpg"
-              alt="Dabstack"
-              className="hidden dark:block rounded-xl shadow-sm"
-              width={100}
-              height={100}
-            />
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <div className="relative">
+              <img
+                src="/DARKMODE.png"
+                alt="Dabstack"
+                className="dark:hidden rounded-xl shadow-2xl hover:scale-110 transition-transform duration-300"
+                width={50}
+                height={50}
+              />
+              <img
+                src="/LIGHTMODE.jpg"
+                alt="Dabstack"
+                className="hidden dark:block rounded-xl shadow-2xl shadow-red-600/20 hover:scale-110 transition-transform duration-300 border border-white/10"
+                width={50}
+                height={50}
+              />
+            </div>
+            <span className="text-white font-serif italic font-black tracking-[0.1em] text-2xl lg:text-3xl group-hover:text-primary transition-all duration-300 drop-shadow-[0_4px_12px_rgba(255,255,255,0.1)] dark:drop-shadow-[0_4px_12px_rgba(239,68,68,0.2)]">
+              DABSTACK
+            </span>
           </div>
 
           {/* Mobile Close Button */}
@@ -147,7 +163,7 @@ export function DashboardSidebar({
                 >
                   <div className={cn(
                     "p-2 rounded-lg transition-colors",
-                    activeSection === item.id ? "bg-blue-600/20 text-blue-400 dark:text-blue-600" : "group-hover:text-sidebar-foreground"
+                    activeSection === item.id ? "bg-primary/10 text-primary" : "group-hover:text-sidebar-foreground"
                   )}>
                     <item.icon className="h-4 w-4" />
                   </div>
@@ -155,7 +171,7 @@ export function DashboardSidebar({
                   {activeSection === item.id && (
                     <motion.div
                       layoutId="sidebar-active"
-                      className="absolute left-0 w-1 h-6 bg-blue-600 rounded-r-full shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+                      className="absolute left-0 w-1 h-6 bg-primary rounded-r-full shadow-[0_0_15px_rgba(239,68,68,0.5)]"
                     />
                   )}
                 </button>
@@ -177,7 +193,7 @@ export function DashboardSidebar({
               >
                 <div className={cn(
                   "p-2 rounded-lg transition-colors",
-                  activeSection === "admin" ? "bg-blue-600/20 text-blue-400 dark:text-blue-600" : "group-hover:text-sidebar-foreground"
+                  activeSection === "admin" ? "bg-primary/10 text-primary" : "group-hover:text-sidebar-foreground"
                 )}>
                   <Shield className="h-4 w-4" />
                 </div>
@@ -185,7 +201,7 @@ export function DashboardSidebar({
                 {activeSection === "admin" && (
                   <motion.div
                     layoutId="sidebar-active"
-                    className="absolute left-0 w-1 h-6 bg-blue-600 rounded-r-full shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+                    className="absolute left-0 w-1 h-6 bg-primary rounded-r-full shadow-[0_0_15px_rgba(239,68,68,0.5)]"
                   />
                 )}
               </button>

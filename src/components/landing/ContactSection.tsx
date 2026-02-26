@@ -23,7 +23,7 @@ export function ContactSection() {
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-400 font-medium">Call Us Only</p>
-                                    <p className="text-lg font-semibold">+234 814 888 2303</p>
+                                    <p className="text-lg font-semibold">+234 703 322 1019</p>
                                 </div>
                             </div>
 
@@ -33,7 +33,7 @@ export function ContactSection() {
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-400 font-medium">Email Address</p>
-                                    <p className="text-lg font-semibold">contact@dabstack.com.ng</p>
+                                    <p className="text-lg font-semibold">dabstack.ltd@gmail.com</p>
                                 </div>
                             </div>
 
@@ -42,8 +42,8 @@ export function ContactSection() {
                                     <MapPin className="w-6 h-6 text-red-500 group-hover:text-white" />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-400 font-medium">Lagos Office</p>
-                                    <p className="text-base">Otta road, Ijora Olopa, Lagos State</p>
+                                    <p className="text-sm text-gray-400 font-medium">Karu, Abuja Office</p>
+
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@ export function ContactSection() {
                                     <label className="text-sm font-semibold ml-1">Your Name</label>
                                     <input
                                         type="text"
-                                        placeholder="John Doe"
+                                        placeholder="dabstack"
                                         className="w-full bg-background border border-border/50 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600 transition-all"
                                     />
                                 </div>
@@ -65,7 +65,7 @@ export function ContactSection() {
                                     <label className="text-sm font-semibold ml-1">Email Address</label>
                                     <input
                                         type="email"
-                                        placeholder="john@example.com"
+                                        placeholder="dabstack@example.com"
                                         className="w-full bg-background border border-border/50 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600 transition-all"
                                     />
                                 </div>
