@@ -45,7 +45,7 @@ export function Navbar({ onGetStarted }: NavbarProps) {
                 alt="DABSTACK"
                 className="h-10 w-auto rounded-lg"
               />
-              <span className="text-white font-bold tracking-tight text-xl hidden lg:block">DABSTACK</span>
+              <span className="text-white font-serif italic font-medium tracking-tight text-2xl hidden lg:block">DABSTACK</span>
             </a>
           </motion.div>
 

@@ -133,13 +133,13 @@ export function Footer() {
                   <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/10 group-hover:text-red-600 transition-all">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <span className="mt-2">+234 814 888 2303</span>
+                  <span className="mt-2">+234 703 322 1019</span>
                 </li>
                 <li className="flex items-start gap-4 text-muted-foreground group cursor-pointer hover:text-foreground transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/10 group-hover:text-red-600 transition-all">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <span className="mt-2 text-sm break-all">contact@dabstack.com.ng</span>
+                  <span className="mt-2 text-sm break-all">dabstack.ltd@gmail.com</span>
                 </li>
               </ul>
             </div>
@@ -147,13 +147,10 @@ export function Footer() {
             <div>
               <h4 className="text-sm font-bold mb-4 text-foreground/70 uppercase tracking-widest">Global Offices</h4>
               <ul className="space-y-4">
+
                 <li className="flex items-start gap-3 text-muted-foreground text-sm">
                   <MapPin className="w-4 h-4 text-red-600 mt-1 flex-shrink-0" />
-                  <span>Otta road, Ijora Olopa, Lagos</span>
-                </li>
-                <li className="flex items-start gap-3 text-muted-foreground text-sm">
-                  <MapPin className="w-4 h-4 text-red-600 mt-1 flex-shrink-0" />
-                  <span>Gwarinpa, F.C.T Abuja</span>
+                  <span>Karu, Abuja</span>
                 </li>
               </ul>
             </div>

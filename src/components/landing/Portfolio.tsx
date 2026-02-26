@@ -6,7 +6,7 @@ const projects = [
         category: "Web App • Analytics",
         description: "A comprehensive analytics platform for Xandeum pNodes, monitoring status, uptime, and version distribution via direct pRPC connection.",
         image: "https://osamaabduldev.vercel.app/images/xandium.png",
-        color: "from-purple-600/20 to-transparent",
+        color: "from-red-600/20 to-transparent",
         link: "https://xandeum-pnode-monitor.vercel.app/"
     },
     {
@@ -14,7 +14,7 @@ const projects = [
         category: "Web App • AI Learning",
         description: "An innovative AI-powered learning platform that transforms PDFs, docs, and images into interactive quizzes and personalized study partners.",
         image: "https://osamaabduldev.vercel.app/images/edu-sparkz.png",
-        color: "from-blue-600/20 to-transparent",
+        color: "from-red-600/20 to-transparent",
         link: "https://edusparkz.fun"
     },
     {
@@ -22,7 +22,7 @@ const projects = [
         category: "Web App • Solana Game",
         description: "A fast-paced, high-stakes arcade game built on Solana. Collect tokens like SOL and BONK while avoiding scams, rugs, and wallet drainers.",
         image: "https://osamaabduldev.vercel.app/images/scrolly.png",
-        color: "from-green-600/20 to-transparent",
+        color: "from-red-600/20 to-transparent",
         link: "https://scrolly-airdrop-catcher.vercel.app/"
     },
     {
@@ -30,7 +30,7 @@ const projects = [
         category: "Web App • Monitoring & Evaluation",
         description: "A specialized digital monitoring platform for the Nasarawa State Ministry of Education, tracking the AGILE initiative for girls' empowerment.",
         image: "https://osamaabduldev.vercel.app/images/agile.png",
-        color: "from-emerald-600/20 to-transparent",
+        color: "from-red-600/20 to-transparent",
         link: "https://agile-tracker-psi.vercel.app/auth"
     },
     {
@@ -38,7 +38,7 @@ const projects = [
         category: "Web App • Leadership Initiative",
         description: "A transformative fellowship platform for the Nasarawa Young Female Leadership Initiative, empowering young women through mentorship and sisterhood.",
         image: "https://osamaabduldev.vercel.app/images/nayfli.png",
-        color: "from-pink-600/20 to-transparent",
+        color: "from-red-600/20 to-transparent",
         link: "https://www.nayfli.org/"
     },
     {
@@ -46,7 +46,7 @@ const projects = [
         category: "Web App • Agrotech",
         description: "Connects farmers to buyers and agro-companies for verified seeds and grants. Integrated Grok AI to fetch real-time agricultural trends from X.",
         image: "https://osamaabduldev.vercel.app/images/farmer.png",
-        color: "from-amber-600/20 to-transparent",
+        color: "from-red-600/20 to-transparent",
         link: "#",
         hideLink: true
     },
@@ -55,7 +55,7 @@ const projects = [
         category: "Web App • Blockchain • AI",
         description: "A high-fidelity memecoin launchpad on MultiversX. Uses Gemini AI to automate token creation, branding, and deployment with a single prompt.",
         image: "https://osamaabduldev.vercel.app/images/memex.png",
-        color: "from-indigo-600/20 to-transparent",
+        color: "from-red-600/20 to-transparent",
         link: "https://memex-blush.vercel.app/"
     },
 
@@ -154,7 +154,7 @@ export function Portfolio() {
                                 <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest mb-2">
                                     {project.category}
                                 </p>
-                                <h3 className="text-xl font-bold text-foreground group-hover:text-red-600 transition-colors duration-300 mb-3">
+                                <h3 className="text-xl font-serif font-medium text-foreground group-hover:text-red-600 transition-colors duration-300 mb-3">
                                     {project.title}
                                 </h3>
                                 {'description' in project && (

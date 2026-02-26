@@ -34,7 +34,7 @@ export function TechStack() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-3xl md:text-5xl font-bold mt-4 mb-2"
+                        className="text-3xl md:text-5xl font-serif font-medium mt-4 mb-2"
                     >
                         Our Tech Stack
                     </motion.h2>
@@ -75,7 +75,7 @@ export function TechStack() {
                             transition={{
                                 duration: 0.8,
                                 delay: index * 0.1,
-                                ease: [0.21, 0.47, 0.32, 0.98] // Smooth custom easing
+                                ease: "easeOut" // Changed from custom array to standard easing string
                             }}
                             whileHover={{
                                 scale: 1.05,

@@ -28,22 +28,22 @@ export function About() {
             icon: Users,
             title: "500+ Clients",
             description: "Trusted by teams worldwide",
-            color: "text-blue-500",
-            bgColor: "bg-blue-500/10"
+            color: "text-red-500",
+            bgColor: "bg-red-500/10"
         },
         {
             icon: Globe,
             title: "Global Reach",
             description: "Offices in major tech hubs",
-            color: "text-green-500",
-            bgColor: "bg-green-500/10"
+            color: "text-red-500",
+            bgColor: "bg-red-500/10"
         },
         {
             icon: Zap,
             title: "24/7 Support",
             description: "Always here to help you",
-            color: "text-amber-500",
-            bgColor: "bg-amber-500/10"
+            color: "text-red-500",
+            bgColor: "bg-red-500/10"
         },
     ];
 
@@ -62,26 +62,26 @@ export function About() {
         {
             title: "Our Mission",
             icon: Target,
-            iconBg: "bg-blue-600",
+            iconBg: "bg-red-700",
             items: [
                 { text: "To help businesses build their brand through professional fullstack solutions that drive results." },
                 { text: "To create software that perfectly aligns with each client's specific needs and goals." }
             ],
-            borderColor: "border-blue-500/10 dark:border-blue-500/20"
+            borderColor: "border-red-500/10 dark:border-red-500/20"
         },
         {
             title: "Our Vision",
             icon: Eye,
-            iconBg: "bg-green-600",
+            iconBg: "bg-red-800",
             items: [
                 { text: "To become the global leader in managed fullstack development, known for excellence and innovation." },
                 { text: "To empower businesses & individuals across the globe with premium digital solutions." }
             ],
-            borderColor: "border-green-500/10 dark:border-green-500/20"
+            borderColor: "border-red-500/10 dark:border-red-500/20"
         }
     ];
 
-    const transition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
+    const transition = { duration: 0.8, ease: "easeOut" };
 
     return (
         <section ref={sectionRef} className="py-24 md:py-32 bg-background relative overflow-hidden" id="about">
@@ -92,7 +92,7 @@ export function About() {
             />
             <motion.div
                 style={{ y: yParallax, rotate: -rotateParallax }}
-                className="absolute bottom-0 -left-20 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[150px] pointer-events-none"
+                className="absolute bottom-0 -left-20 w-[600px] h-[600px] bg-red-800/5 rounded-full blur-[150px] pointer-events-none"
             />
 
             <div className="container mx-auto px-6 relative z-10">
@@ -111,16 +111,16 @@ export function About() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
-                        transition={{ ...transition, delay: 0.1 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mt-4 mb-6 text-foreground"
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                        className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium tracking-tight mt-4 mb-6 text-foreground"
                     >
-                        Dabstack Solution <span className="text-red-600">Limited</span>
+                        Dabstack Solution <span className="text-red-600 font-cursive italic">Limited</span>
                     </motion.h2>
                     <motion.div
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
-                        transition={{ delay: 0.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
                         className="h-1.5 w-32 bg-red-600 mx-auto rounded-full"
                     />
                 </div>
@@ -138,11 +138,11 @@ export function About() {
                             Nigeria's Best <span className="text-red-600">Fullstack</span> Agency
                         </h3>
                         <div className="space-y-6">
-                            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
-                                Dabstack Solution Limited are the best fullstack developers. We are passionate about helping businesses in the retail, finance, health and corporate industries fully leverage the latest <span className="text-red-600 font-bold border-b-2 border-red-600/20">software technologies</span>.
+                            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
+                                Dabstack Solution Limited are the best fullstack developers. We are passionate about helping businesses in the retail, finance, health and corporate industries fully leverage the latest <span className="text-red-600 font-serif italic border-b-2 border-red-600/20">software technologies</span>.
                             </p>
-                            <p className="text-lg text-muted-foreground/80 leading-relaxed">
-                                We build corporate business solutions and ecommerce platforms for all kinds of businesses across <span className="text-red-600 font-bold border-b-2 border-red-600/20">global markets</span> and beyond. Our team is dedicated to creating solutions that meet your exact needs through technical excellence.
+                            <p className="text-lg text-muted-foreground/80 leading-relaxed font-light">
+                                We build corporate business solutions and ecommerce platforms for all kinds of businesses across <span className="text-red-600 font-serif italic border-b-2 border-red-600/20">global markets</span> and beyond. Our team is dedicated to creating solutions that meet your exact needs through technical excellence.
                             </p>
                         </div>
                         <motion.button
@@ -162,7 +162,7 @@ export function About() {
                                 initial={{ opacity: 0, scale: 0.8, y: 30 }}
                                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-50px" }}
-                                transition={{ ...transition, delay: index * 0.1 }}
+                                transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
                                 whileHover={{ y: -10, scale: 1.02 }}
                                 className="bg-muted/30 backdrop-blur-sm border border-border/50 p-6 md:p-8 rounded-[32px] text-center shadow-sm hover:shadow-xl hover:shadow-red-500/5 hover:border-red-500/20 transition-all duration-300 group"
                             >
@@ -187,7 +187,7 @@ export function About() {
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-100px" }}
-                            transition={{ ...transition, delay: index * 0.15 }}
+                            transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.15 }}
                             whileHover={{ y: -15 }}
                             className={`bg-card p-10 rounded-[40px] shadow-2xl border-2 ${card.borderColor} flex flex-col items-center text-center relative overflow-hidden group hover:border-red-500/30 transition-all duration-500`}
                         >

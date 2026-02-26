@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Roboto Condensed"', 'sans-serif'],
-        oswald: ['Oswald', 'sans-serif'],
+        sans: ["Outfit", "sans-serif"],
+        serif: ["Instrument Serif", "serif"],
+        cursive: ["Cormorant Garamond", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -23,16 +24,6 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        navy: {
-          DEFAULT: "hsl(var(--navy))",
-          light: "hsl(var(--navy-light))",
-          dark: "hsl(var(--navy-dark))",
-        },
-        beige: {
-          DEFAULT: "hsl(var(--beige))",
-          dark: "hsl(var(--beige-dark))",
-        },
-        cream: "hsl(var(--cream))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

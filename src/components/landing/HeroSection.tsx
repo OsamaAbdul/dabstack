@@ -44,27 +44,37 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
   }, [displayText, isDeleting, loopIndex, typingSpeed, strings]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-20 transition-colors duration-300">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-        <div className="absolute inset-0"
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-20 transition-colors duration-300">
+      {/* Premium Background with Provided Image */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* The Base Image */}
+        <div
+          className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0,0,0,0.1) 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
+            backgroundImage: `url('/wmremove-transformed.webp')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
           }}
         />
-        <div className="absolute inset-0 dark:hidden"
-          style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0,0,0,0.1) 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
-        <div className="absolute inset-0 hidden dark:block"
-          style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
+
+        {/* Premium Overlays & Glassmorphism - Horizontal Gradient for visibility */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/60 to-transparent dark:from-background dark:via-background/70 dark:to-transparent" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-background/90" />
+
+        {/* Animated Glow Blobs for "Premium" feel - Now in Red/Rose hues */}
+        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none z-20" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-rose-600/5 rounded-full blur-[100px] pointer-events-none z-20" />
+
+        {/* Subtle Web Overlay (SVG) */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.05] dark:opacity-[0.08] z-30" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="premium-web" width="200" height="200" patternUnits="userSpaceOnUse">
+              <path d="M 200 0 L 0 0 0 200" fill="none" stroke="currentColor" strokeWidth="0.5" />
+              <path d="M 0 0 L 200 200" fill="none" stroke="currentColor" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#premium-web)" />
+        </svg>
       </div>
 
       {/* Floating Icons Background */}
@@ -72,57 +82,53 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         <motion.div
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-1/4 text-blue-500/20"
+          className="absolute top-1/4 left-[10%] text-red-500/10"
         >
           <Cloud size={120} />
         </motion.div>
         <motion.div
           animate={{ y: [0, 30, 0] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute top-1/3 right-1/4 text-cyan-500/20"
+          className="absolute top-1/3 right-[15%] text-red-400/10"
         >
           <Globe size={100} />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-1/4 left-1/3 text-indigo-500/20"
+          className="absolute bottom-1/4 left-[20%] text-red-500/10"
         >
           <Cpu size={80} />
         </motion.div>
-        {/* Add some "code" looking text elements */}
-        <div className="absolute top-20 right-10 font-mono text-xs text-blue-900/10 dark:text-blue-400/10 hidden md:block">
-          {`const build = () => { return "future" }`}
-        </div>
-
       </div>
 
-      <div className="container mx-auto px-6 py-20 relative z-10">
-        <div className="max-w-5xl mx-auto text-center">
+      <div className="container mx-auto px-6 py-20 relative z-10 mt-10">
+        <div className="max-w-4xl text-left">
 
           {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 text-foreground"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-medium tracking-tight mb-8 text-foreground leading-[1.1]"
           >
-            We Build, Manage & Scale <br className="hidden md:block" />
-            <span className="text-foreground">Modern Websites</span>
+            We Build, Manage <br className="hidden md:block" />
+            & Scale <span className="font-cursive italic text-primary">Modern</span> <br className="hidden md:block" />
+            <span className="text-foreground">Websites</span>
           </motion.h1>
 
           {/* Subheadline (Typewriter) */}
-          <div className="h-24 sm:h-16 mb-12 flex items-center justify-center">
+          <div className="h-24 sm:h-16 mb-12 flex items-center justify-start">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed font-medium"
+              className="text-xl sm:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-sans font-light"
             >
               {displayText}
               <motion.span
                 animate={{ opacity: [1, 0] }}
                 transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                className="inline-block w-[2px] h-[1.2em] bg-red-600 ml-1 translate-y-1"
+                className="inline-block w-[3px] h-[1.2em] bg-primary ml-1 translate-y-1"
               />
             </motion.p>
           </div>
@@ -132,12 +138,12 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+            className="flex flex-col sm:flex-row items-center justify-start gap-6 font-sans"
           >
             <Button
               size="lg"
               onClick={onGetStarted}
-              className="w-full sm:w-auto h-14 px-10 text-lg font-semibold bg-[#2563EB] hover:bg-[#1d4ed8] text-white rounded-full transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]"
+              className="w-full sm:w-auto h-16 px-12 text-xl font-bold bg-primary hover:bg-red-700 text-white rounded-2xl transition-all shadow-[0_20px_40px_-15px_rgba(239,68,68,0.4)] hover:scale-105 active:scale-95"
             >
               Start Building
             </Button>
