@@ -11,9 +11,9 @@ export function CTASection({ onGetStarted }: CTASectionProps) {
     <section className="py-24 sm:py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-primary -z-10" />
-      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-navy-light -z-10" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-beige/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-beige/5 rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-black/90 -z-10" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-50" />
 
       <div className="container mx-auto px-6">
         <motion.div
@@ -30,7 +30,7 @@ export function CTASection({ onGetStarted }: CTASectionProps) {
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
             Ready to Build Something{" "}
-            <span className="text-beige">Extraordinary?</span>
+            <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] italic font-serif">Extraordinary?</span>
           </h2>
 
           <p className="text-primary-foreground/80 text-lg mb-10 max-w-xl mx-auto">

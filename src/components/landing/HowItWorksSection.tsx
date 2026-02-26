@@ -33,8 +33,8 @@ export function HowItWorksSection() {
         <section className="py-24 bg-muted/30 relative overflow-hidden transition-colors duration-300">
             {/* Background Gradients */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-blue-600/5 dark:bg-blue-600/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/5 dark:bg-purple-600/10 rounded-full blur-[120px]" />
+                <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-primary/5 dark:bg-primary/10 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[10%] left-[-10%] w-[500px] h-[500px] bg-red-600/5 dark:bg-red-600/10 rounded-full blur-[120px]" />
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
@@ -60,7 +60,7 @@ export function HowItWorksSection() {
 
                 <div className="relative max-w-5xl mx-auto">
                     {/* Connecting Line (Desktop) */}
-                    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500/0 via-blue-500/50 to-blue-500/0 hidden md:block -translate-x-1/2" />
+                    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/0 via-primary/50 to-primary/0 hidden md:block -translate-x-1/2" />
 
                     <div className="flex flex-col gap-12 md:gap-24">
                         {steps.map((step, index) => (
@@ -80,7 +80,7 @@ function TimelineItem({ step, index }: { step: typeof steps[0]; index: number })
         <div className={`relative flex items-center ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col gap-8`}>
 
             {/* Center Checkpoint/Dot (Desktop) */}
-            <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-4 border-background bg-blue-600 z-10 items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.5)] transition-colors duration-300">
+            <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-4 border-background bg-primary z-10 items-center justify-center shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-colors duration-300">
                 <span className="text-white font-bold text-sm">{step.order}</span>
             </div>
 
@@ -94,11 +94,11 @@ function TimelineItem({ step, index }: { step: typeof steps[0]; index: number })
             >
                 <div className={`
             p-8 rounded-2xl border border-border bg-card backdrop-blur-sm 
-            hover:border-blue-500/30 transition-all duration-300 group
+            hover:border-primary/30 transition-all duration-300 group
             shadow-lg hover:shadow-xl
         `}>
                     <div className={`flex items-center gap-4 mb-4 ${isEven ? 'md:flex-row-reverse' : 'flex-row'}`}>
-                        <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 group-hover:text-white group-hover:bg-blue-600 dark:group-hover:bg-blue-500 transition-colors">
+                        <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover:text-white group-hover:bg-primary transition-colors">
                             <step.icon className="w-6 h-6" />
                         </div>
                         <h3 className="text-2xl font-bold text-foreground font-sans">{step.title}</h3>

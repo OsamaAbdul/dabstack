@@ -50,7 +50,7 @@ export function BillingSection() {
                 <Card className="p-6">
                     <div className="flex items-center justify-between mb-4">
                         <h3 className="font-medium text-muted-foreground">Pending Requests</h3>
-                        <div className="p-2 bg-yellow-500/10 text-yellow-600 rounded-lg">
+                        <div className="p-2 bg-red-500/10 text-red-600 rounded-lg">
                             <Clock className="h-5 w-5" />
                         </div>
                     </div>
@@ -85,7 +85,7 @@ export function BillingSection() {
                                     <div className="flex items-center gap-4">
                                         <div className={cn(
                                             "p-3 rounded-full",
-                                            project.status === 'completed' ? "bg-green-100 text-green-600" : "bg-blue-100 text-blue-600"
+                                            project.status === 'completed' ? "bg-green-100 text-green-600" : "bg-primary/10 text-primary"
                                         )}>
                                             {project.status === 'completed' ? <CheckCircle className="h-5 w-5" /> : <Clock className="h-5 w-5" />}
                                         </div>
@@ -100,7 +100,7 @@ export function BillingSection() {
                                             "text-xs px-2 py-0.5 rounded-full capitalize",
                                             project.status === 'completed'
                                                 ? "bg-green-100 text-green-700"
-                                                : "bg-blue-100 text-blue-700"
+                                                : "bg-primary/10 text-primary"
                                         )}>
                                             {project.status === 'in_progress' ? 'Paid' : project.status}
                                         </span>

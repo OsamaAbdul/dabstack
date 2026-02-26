@@ -51,7 +51,7 @@ interface AdminPanelProps {
 
 const statusColors: Record<ProjectStatus, string> = {
   onboarding: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
-  review: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+  review: "bg-primary/10 text-primary border-primary/20",
   in_progress: "bg-purple-500/10 text-purple-600 border-purple-500/20",
   completed: "bg-green-500/10 text-green-600 border-green-500/20",
 };
@@ -117,7 +117,7 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
         particleCount: 150,
         spread: 80,
         origin: { y: 0.6 },
-        colors: ["#2563EB", "#0ea5e9", "#F5F5DC"],
+        colors: ["#EF4444", "#DC2626", "#000000"],
       });
       toast.success("Project Completed! 🎉");
     }
@@ -144,7 +144,7 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
 
   const stats = [
     { label: "Total Revenue", value: `₦${projects.filter(p => p.status === 'in_progress' || p.status === 'completed').reduce((acc, p) => acc + (p.budget || 0), 0).toLocaleString()}`, icon: Banknote, color: "text-green-500 bg-green-500/10" },
-    { label: "Total Users", value: users.length, icon: UsersIcon, color: "text-blue-500 bg-blue-500/10" },
+    { label: "Total Users", value: users.length, icon: UsersIcon, color: "text-primary bg-primary/10" },
     { label: "Total Clients", value: users.filter(u => u.role === 'user').length, icon: Briefcase, color: "text-purple-500 bg-purple-500/10" },
     { label: "Completed Projects", value: projects.filter(p => p.status === "completed").length, icon: CheckCircle, color: "text-orange-500 bg-orange-500/10" },
   ];
@@ -336,7 +336,7 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
                             className={cn(
                               "h-8 w-8 rounded-full",
                               u.role === "admin"
-                                ? "bg-blue-100 text-blue-600 hover:bg-blue-200"
+                                ? "bg-primary/10 text-primary hover:bg-primary/20"
                                 : "text-muted-foreground hover:bg-muted"
                             )}
                             onClick={() => {
@@ -367,7 +367,7 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="p-6">
               <h3 className="font-semibold mb-6 flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-blue-500" />
+                <TrendingUp className="h-4 w-4 text-primary" />
                 Revenue Overview (Last 6 Months)
               </h3>
               <div className="h-[300px] w-full">
