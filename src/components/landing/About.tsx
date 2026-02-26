@@ -111,7 +111,7 @@ export function About() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                        transition={{ duration: 0.8, delay: 0.1 }}
                         className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium tracking-tight mt-4 mb-6 text-foreground"
                     >
                         Dabstack Solution <span className="text-red-600 font-cursive italic">Limited</span>
