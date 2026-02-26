@@ -153,7 +153,7 @@ export function AdminPanel({ onOpenChat }: AdminPanelProps) {
     <div className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Admin Dashboard</h2>
+          <h2 className="text-3xl font-serif font-bold tracking-tight">Admin Dashboard</h2>
           <p className="text-muted-foreground">Comprehensive system oversight and management</p>
         </div>
 

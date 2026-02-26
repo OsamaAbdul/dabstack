@@ -80,7 +80,7 @@ export function Portfolio() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-3xl md:text-5xl font-bold mt-4 mb-2"
+                        className="text-3xl md:text-5xl font-serif font-bold mt-4 mb-2"
                     >
                         Our Portfolio
                     </motion.h2>

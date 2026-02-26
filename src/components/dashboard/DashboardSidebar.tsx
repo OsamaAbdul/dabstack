@@ -78,9 +78,10 @@ export function DashboardSidebar({
         <div
           className="absolute inset-0 z-0 opacity-40 dark:opacity-30"
           style={{
-            backgroundImage: `url('/wmremove-transformed.webp')`,
+            backgroundImage: `url('/bg.gif')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            opacity: 0.1
           }}
         />
         <div className="absolute inset-0 z-0 bg-gradient-to-b from-sidebar via-sidebar/80 to-sidebar" />
@@ -124,14 +125,12 @@ export function DashboardSidebar({
               <img
                 src="/LIGHTMODE.jpg"
                 alt="Dabstack"
-                className="hidden dark:block rounded-xl shadow-2xl shadow-red-600/20 hover:scale-110 transition-transform duration-300 border border-white/10"
+                className="hidden dark:block rounded-xl shadow-2xl shadow-red-600/20 hover:scale-110 transition-transform duration-300 border border-sidebar-foreground/10"
                 width={50}
                 height={50}
               />
             </div>
-            <span className="text-white font-serif italic font-black tracking-[0.1em] text-2xl lg:text-3xl group-hover:text-primary transition-all duration-300 drop-shadow-[0_4px_12px_rgba(255,255,255,0.1)] dark:drop-shadow-[0_4px_12px_rgba(239,68,68,0.2)]">
-              DABSTACK
-            </span>
+
           </div>
 
           {/* Mobile Close Button */}
@@ -149,7 +148,7 @@ export function DashboardSidebar({
         <nav className="flex-1 px-4 space-y-2">
           {!isAdmin && (
             <>
-              <div className="mb-4 px-4 text-[10px] font-bold text-sidebar-foreground/30 uppercase tracking-[0.2em]">Dashboard</div>
+
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -158,7 +157,7 @@ export function DashboardSidebar({
                     "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative",
                     activeSection === item.id
                       ? "bg-sidebar-foreground/5 text-sidebar-foreground shadow-sm"
-                      : "text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-foreground/5"
+                      : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-foreground/5"
                   )}
                 >
                   <div className={cn(
@@ -181,14 +180,14 @@ export function DashboardSidebar({
 
           {isAdmin && (
             <>
-              <div className="mt-8 mb-4 px-4 text-[10px] font-bold text-sidebar-foreground/30 uppercase tracking-[0.2em]">Administration</div>
+              <div className="mt-8 mb-4 px-4 text-[10px] font-bold text-sidebar-foreground/60 uppercase tracking-[0.2em] transition-colors duration-300">Administration</div>
               <button
                 onClick={() => onSectionChange("admin")}
                 className={cn(
                   "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative",
                   activeSection === "admin"
                     ? "bg-sidebar-foreground/5 text-sidebar-foreground shadow-sm"
-                    : "text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-foreground/5"
+                    : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-foreground/5"
                 )}
               >
                 <div className={cn(
@@ -213,18 +212,18 @@ export function DashboardSidebar({
         <div className="p-6 border-t border-sidebar-border bg-sidebar/50 backdrop-blur-md relative z-10">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="flex items-center gap-3 px-3 py-3 mb-4 rounded-2xl bg-white/5 border border-white/10 shadow-lg transition-all"
+            className="flex items-center gap-3 px-3 py-3 mb-4 rounded-2xl bg-sidebar-foreground/5 border border-sidebar-foreground/10 shadow-lg transition-all"
           >
-            <div className="relative h-12 w-12 rounded-full ring-2 ring-primary/20 flex items-center justify-center text-sm font-bold border border-white/20 text-white overflow-hidden bg-primary/10">
+            <div className="relative h-12 w-12 rounded-full ring-2 ring-primary/20 flex items-center justify-center text-sm font-bold border border-sidebar-foreground/20 text-sidebar-foreground overflow-hidden bg-primary/10">
               {avatarUrl ? (
                 <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
               ) : (
                 <span className="font-serif italic">{user?.email?.charAt(0).toUpperCase()}</span>
               )}
             </div>
-            <div className="flex flex-col min-w-0">
-              <span className="text-sm font-serif italic font-bold truncate text-white">Account</span>
-              <span className="text-[10px] text-white/60 truncate font-medium">{user?.email}</span>
+            <div className="flex flex-col min-w-0 transition-colors duration-300">
+              <span className="text-sm font-serif italic font-bold truncate text-sidebar-foreground">Account</span>
+              <span className="text-[10px] text-sidebar-foreground/70 truncate font-medium">{user?.email}</span>
             </div>
           </motion.div>
 
@@ -232,10 +231,10 @@ export function DashboardSidebar({
             <Button
               variant="ghost"
               onClick={handleLogout}
-              className="flex-1 justify-start gap-3 h-12 px-4 text-white/70 hover:text-primary hover:bg-primary/10 rounded-xl transition-all border border-transparent hover:border-primary/20"
+              className="flex-1 justify-start gap-3 h-12 px-4 text-sidebar-foreground/70 hover:text-primary hover:bg-primary/10 rounded-xl transition-all border border-transparent hover:border-primary/20"
             >
               <LogOut className="h-5 w-5 text-primary" />
-              <span className="text-sm font-bold">Log out</span>
+              <span className="text-sm font-bold text-sidebar-foreground transition-colors duration-300">Log out</span>
             </Button>
           </div>
         </div>

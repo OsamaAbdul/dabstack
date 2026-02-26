@@ -81,7 +81,7 @@ export function About() {
         }
     ];
 
-    const transition = { duration: 0.8, ease: "easeOut" };
+    const transition = { duration: 0.8, ease: "easeOut" } as const;
 
     return (
         <section ref={sectionRef} className="py-24 md:py-32 bg-background relative overflow-hidden" id="about">
@@ -134,7 +134,7 @@ export function About() {
                         transition={transition}
                         className="space-y-8"
                     >
-                        <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                        <h3 className="text-2xl md:text-3xl font-serif font-bold text-foreground">
                             Nigeria's Best <span className="text-red-600">Fullstack</span> Agency
                         </h3>
                         <div className="space-y-6">
@@ -172,7 +172,7 @@ export function About() {
                                 >
                                     <feature.icon className={`w-10 h-10 ${feature.color}`} />
                                 </motion.div>
-                                <h4 className="font-black text-foreground text-lg mb-2">{feature.title}</h4>
+                                <h4 className="font-serif font-bold text-foreground text-xl mb-2">{feature.title}</h4>
                                 <p className="text-sm text-muted-foreground font-medium">{feature.description}</p>
                             </motion.div>
                         ))}
@@ -200,7 +200,7 @@ export function About() {
                             >
                                 <card.icon className="w-10 h-10 text-white" />
                             </motion.div>
-                            <h3 className="text-2xl font-black mb-8 tracking-tight">{card.title}</h3>
+                            <h3 className="text-2xl font-serif font-bold mb-8 tracking-tight">{card.title}</h3>
                             <ul className="space-y-6 text-left w-full">
                                 {card.items.map((item, idx) => (
                                     <motion.li

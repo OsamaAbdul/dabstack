@@ -51,7 +51,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url('/wmremove-transformed.webp')`,
+            backgroundImage: `url('/bg.gif')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -114,10 +114,10 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-medium tracking-tight mb-8 text-foreground leading-[1.1]"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight mb-8 text-foreground leading-[1.1]"
           >
             We Build, Manage <br className="hidden md:block" />
-            & Scale <span className="font-cursive italic text-primary">Modern</span> <br className="hidden md:block" />
+            & Scale <span className="font-serif text-primary">Modern</span> <br className="hidden md:block" />
             <span className="text-foreground">Websites</span>
           </motion.h1>
 
@@ -126,7 +126,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-xl sm:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-sans font-light"
+              className="text-xl sm:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-sans font-normal"
             >
               {displayText}
               <motion.span

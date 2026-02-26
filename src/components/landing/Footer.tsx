@@ -160,7 +160,7 @@ export function Footer() {
         {/* Bottom copyright and legal */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
           <p className="text-muted-foreground">
-            © {new Date().getFullYear()} <span className="text-foreground font-semibold">Dabstack</span>. All rights reserved.
+            © {new Date().getFullYear()} <span className="text-foreground font-serif italic font-medium tracking-tight text-lg">Dabstack</span>. All rights reserved.
           </p>
           <div className="flex items-center gap-8 text-muted-foreground">
             <button onClick={() => setShowPrivacy(true)} className="hover:text-red-600 transition-colors">Privacy Policy</button>
