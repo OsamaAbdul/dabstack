@@ -58,8 +58,12 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         />
 
         {/* Premium Overlays & Glassmorphism - Horizontal Gradient for visibility */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/60 to-transparent dark:from-background dark:via-background/70 dark:to-transparent" />
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-background/90" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/80 to-transparent dark:via-background/70" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-background/95" />
+
+        {/* Subtle Paper/Grain Texture for Light Mode to reduce "whiteness" */}
+        <div className="absolute inset-0 z-10 opacity-[0.03] dark:opacity-0 pointer-events-none mix-blend-multiply"
+          style={{ backgroundImage: `url('https://www.transparenttextures.com/patterns/asfalt-dark.png')` }} />
 
         {/* Animated Glow Blobs for "Premium" feel - Now in Red/Rose hues */}
         <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none z-20" />

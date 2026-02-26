@@ -10,20 +10,15 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("theme") as Theme;
-      if (saved) return saved;
-      // Default to dark for a premium first impression
-      return "dark";
-    }
-    return "dark";
-  });
+  // Hardcoded to "dark" so every session starts in high-end dark mode.
+  const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
+    // We still save the preference so toggleTheme works, 
+    // but we won't LOAD it on start anymore.
     localStorage.setItem("theme", theme);
   }, [theme]);
 
