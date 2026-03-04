@@ -106,7 +106,7 @@ export default function Auth() {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-6">
               <img
-                src="/LIGHTMODE.jpg"
+                src="/LIGHTMODE.png"
                 alt="DABSTACK"
                 className="dark:hidden rounded-xl shadow-sm"
                 width={100}

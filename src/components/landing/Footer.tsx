@@ -51,7 +51,7 @@ export function Footer() {
           <div className="space-y-6">
             <div className="flex items-center gap-2">
               <img
-                src="/LIGHTMODE.jpg"
+                src="/LIGHTMODE.png"
                 alt="DABSTACK"
                 className="dark:hidden rounded-lg shadow-sm h-12 w-auto"
               />

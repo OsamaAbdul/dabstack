@@ -87,18 +87,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           <DialogHeader className="text-center mb-6">
             <div className="flex items-center justify-center mb-6">
               <img
-                src="/LIGHTMODE.jpg"
+                src="/LIGHTMODE.png"
                 alt="DABSTACK"
                 className="dark:hidden rounded-xl shadow-sm"
-                width={100}
-                height={80}
+                width={140}
+                height={110}
               />
               <img
                 src="/DARKMODE.png"
                 alt="DABSTACK"
                 className="hidden dark:block rounded-xl shadow-sm"
-                width={100}
-                height={80}
+                width={140}
+                height={110}
               />
             </div>
             <DialogTitle className="text-2xl font-bold">

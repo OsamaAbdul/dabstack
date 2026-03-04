@@ -173,7 +173,7 @@ export default function Dashboard() {
       <div className="md:hidden flex items-center justify-between p-4 bg-primary text-primary-foreground">
         <div className="flex items-center">
           <img
-            src="/LIGHTMODE.jpg"
+            src="/LIGHTMODE.png"
             alt="Dabstack"
             className="h-8 w-auto dark:hidden rounded-lg shadow-sm"
             width={80}

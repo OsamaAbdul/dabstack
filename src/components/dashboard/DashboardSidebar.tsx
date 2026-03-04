@@ -123,7 +123,7 @@ export function DashboardSidebar({
                 height={50}
               />
               <img
-                src="/LIGHTMODE.jpg"
+                src="/LIGHTMODE.png"
                 alt="Dabstack"
                 className="hidden dark:block rounded-xl shadow-2xl shadow-red-600/20 hover:scale-110 transition-transform duration-300 border border-sidebar-foreground/10"
                 width={50}

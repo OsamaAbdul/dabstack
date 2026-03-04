@@ -106,54 +106,116 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         </motion.div>
       </div>
 
-      <div className="container mx-auto px-6 md:pl-24 md:pr-12 relative z-10 mt-10">
-        <div className="max-w-4xl text-left">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 mt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight mb-8 text-foreground leading-[1.1]"
-          >
-            We Build, Manage <br className="hidden md:block" />
-            & Scale <span className="font-serif text-primary">Modern</span> <br className="hidden md:block" />
-            <span className="text-foreground">Websites</span>
-          </motion.h1>
-
-          {/* Subheadline (Typewriter) */}
-          <div className="h-24 sm:h-16 mb-12 flex items-center justify-start">
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-xl sm:text-2xl text-foreground max-w-2xl leading-relaxed font-bold tracking-tight"
+          {/* Left Column: Content */}
+          <div className="lg:col-span-7 text-left">
+            {/* Headline */}
+            <motion.h1
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight mb-8 text-foreground leading-[1.1]"
             >
-              {displayText}
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                className="inline-block w-[3px] h-[1.2em] bg-primary ml-1 translate-y-1"
-              />
-            </motion.p>
+              We Build, Manage <br className="hidden md:block" />
+              & Scale <span className="font-serif text-primary">Modern</span> <br className="hidden md:block" />
+              <span className="text-foreground">Websites</span>
+            </motion.h1>
+
+            {/* Subheadline (Typewriter) */}
+            <div className="h-24 sm:h-16 mb-12 flex items-center justify-start">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-xl sm:text-2xl text-foreground max-w-2xl leading-relaxed font-bold tracking-tight"
+              >
+                {displayText}
+                <motion.span
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                  className="inline-block w-[3px] h-[1.2em] bg-primary ml-1 translate-y-1"
+                />
+              </motion.p>
+            </div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-center justify-start gap-6 font-sans"
+            >
+              <Button
+                size="lg"
+                onClick={onGetStarted}
+                className="w-full sm:w-auto h-16 px-12 text-xl font-bold bg-primary hover:bg-red-700 text-white rounded-2xl transition-all shadow-[0_20px_40px_-15px_rgba(239,68,68,0.4)] hover:scale-105 active:scale-95"
+              >
+                Start Building
+              </Button>
+            </motion.div>
           </div>
 
-          {/* CTA Buttons */}
+          {/* Right Column: Code Showcase */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-start gap-6 font-sans"
+            initial={{ opacity: 0, scale: 0.8, rotateY: 20 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 hidden lg:block perspective-1000"
           >
-            <Button
-              size="lg"
-              onClick={onGetStarted}
-              className="w-full sm:w-auto h-16 px-12 text-xl font-bold bg-primary hover:bg-red-700 text-white rounded-2xl transition-all shadow-[0_20px_40px_-15px_rgba(239,68,68,0.4)] hover:scale-105 active:scale-95"
+            <motion.div
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative group"
             >
-              Start Building
-            </Button>
+              {/* Decorative Glow */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-rose-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
 
+              <div className="relative bg-[#1e1e1e] rounded-2xl border border-white/10 overflow-hidden shadow-2xl overflow-hidden">
+                {/* Mac Header */}
+                <div className="flex items-center gap-2 px-4 py-3 bg-[#2d2d2d] border-b border-white/5">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                  </div>
+                  <div className="flex-1 text-center pr-12">
+                    <span className="text-xs text-white/40 font-mono tracking-wider italic">Navbar.tsx</span>
+                  </div>
+                </div>
 
+                {/* Code Content */}
+                <div className="p-6 font-mono text-sm sm:text-base leading-relaxed overflow-x-auto scrollbar-hide">
+                  <pre className="text-white/90">
+                    <code>
+                      <span className="text-pink-400">1</span>  <span className="text-purple-400">import</span> {"{"} <span className="text-blue-300">useState</span>, <span className="text-blue-300">useEffect</span> {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-400">"react"</span>;<br />
+                      <span className="text-pink-400">2</span>  <span className="text-purple-400">import</span> {"{"} <span className="text-blue-300">motion</span>, <span className="text-blue-300">useScroll</span> {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-400">"framer-motion"</span>;<br />
+                      <span className="text-pink-400">3</span>  <span className="text-purple-400">import</span> {"{"} <span className="text-blue-300">Button</span> {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-400">"@/components/ui/button"</span>;<br />
+                      <span className="text-pink-400">4</span>  <br />
+                      <span className="text-pink-400">5</span>  <span className="text-purple-400">export function</span> <span className="text-yellow-300">Navbar</span>({"{"} <span className="text-orange-300">onGetStarted</span> {"}"}: NavbarProps) {"{"}<br />
+                      <span className="text-pink-400">6</span>  &nbsp;&nbsp;<span className="text-purple-400">const</span> [<span className="text-blue-300">isOpen</span>, <span className="text-blue-300">setIsOpen</span>] = <span className="text-yellow-300">useState</span>(<span className="text-blue-300">false</span>);<br />
+                      <span className="text-pink-400">7</span>  &nbsp;&nbsp;<span className="text-purple-400">const</span> {"{"} <span className="text-blue-300">scrollY</span> {"}"} = <span className="text-yellow-300">useScroll</span>();<br />
+                      <span className="text-pink-400">8</span>  <br />
+                      <span className="text-pink-400">9</span>  &nbsp;&nbsp;<span className="text-gray-500">// Dynamic scale and opacity</span><br />
+                      <span className="text-pink-400">10</span> &nbsp;&nbsp;<span className="text-purple-400">const</span> <span className="text-blue-300">navScale</span> = <span className="text-yellow-300">useTransform</span>(<span className="text-blue-300">scrollY</span>, [0, 100], [1, 0.98]);<br />
+                      <span className="text-pink-400">11</span> &nbsp;&nbsp;<span className="text-purple-400">const</span> <span className="text-blue-300">navBgOpacity</span> = <span className="text-yellow-300">useTransform</span>(<span className="text-blue-300">scrollY</span>, [0, 100], [0.8, 0.95]);<br />
+                    </code>
+                  </pre>
+                </div>
 
+                {/* Cursor Highlight (Simulated) */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 0.5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute left-10 top-36 w-20 h-6 bg-blue-500/20 rounded"
+                />
+              </div>
+
+              {/* Decorative Elements */}
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-3xl -z-10" />
+              <div className="absolute -top-10 -left-10 w-40 h-40 bg-rose-600/10 rounded-full blur-3xl -z-10" />
+            </motion.div>
           </motion.div>
 
         </div>
