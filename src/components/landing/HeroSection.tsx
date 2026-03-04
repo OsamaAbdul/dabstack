@@ -2,12 +2,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Mail, Cloud, Globe, Cpu } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTheme } from "@/hooks/useTheme";
 
 interface HeroSectionProps {
   onGetStarted: () => void;
 }
 
 export function HeroSection({ onGetStarted }: HeroSectionProps) {
+  const { theme } = useTheme();
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopIndex, setLoopIndex] = useState(0);
@@ -47,15 +49,17 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
     <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-20 transition-colors duration-300">
       {/* Premium Background with Provided Image */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* The Base Image - Only visible in dark mode to keep light mode clean white */}
-        <div
-          className="absolute inset-0 z-0 opacity-0 dark:opacity-100 transition-opacity duration-700"
-          style={{
-            backgroundImage: `url('/bg.gif')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
+        {/* The Base Image - Only rendered in dark mode to avoid 24MB download in light mode */}
+        {theme === "dark" && (
+          <div
+            className="absolute inset-0 z-0 opacity-100 transition-opacity duration-700"
+            style={{
+              backgroundImage: `url('/bg.gif')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+        )}
 
         {/* Premium Overlays - Adjusted for light mode white background */}
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/40 to-background/10 dark:to-transparent transition-colors duration-500" />
