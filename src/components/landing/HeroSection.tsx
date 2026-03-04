@@ -47,9 +47,9 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
     <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-20 transition-colors duration-300">
       {/* Premium Background with Provided Image */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* The Base Image */}
+        {/* The Base Image - Only visible in dark mode to keep light mode clean white */}
         <div
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 opacity-0 dark:opacity-100 transition-opacity duration-700"
           style={{
             backgroundImage: `url('/bg.gif')`,
             backgroundSize: 'cover',
@@ -57,8 +57,8 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
           }}
         />
 
-        {/* Premium Overlays & Glassmorphism - Horizontal Gradient for visibility */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/40 to-transparent dark:via-background/70 transition-colors duration-500" />
+        {/* Premium Overlays - Adjusted for light mode white background */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/40 to-background/10 dark:to-transparent transition-colors duration-500" />
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-background/60 dark:to-background/95 transition-colors duration-500" />
 
         {/* Subtle Paper/Grain Texture for Light Mode to reduce "whiteness" */}
@@ -86,23 +86,23 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         <motion.div
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-[10%] text-red-500/10"
+          className="absolute top-1/4 left-[10%] text-primary/20 dark:text-primary/10 transition-colors duration-500"
         >
           <Cloud size={120} />
         </motion.div>
         <motion.div
           animate={{ y: [0, 30, 0] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute top-1/3 right-[15%] text-red-400/10"
+          className="absolute top-1/3 right-[15%] text-primary/15 dark:text-primary/10 transition-colors duration-500"
         >
           <Globe size={100} />
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-1/4 left-[20%] text-red-500/10"
+          className="absolute bottom-1/3 right-[20%] text-primary/20 dark:text-primary/10 transition-colors duration-500"
         >
-          <Cpu size={80} />
+          <Cpu size={120} />
         </motion.div>
       </div>
 
@@ -126,7 +126,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-xl sm:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-sans font-normal"
+              className="text-xl sm:text-2xl text-foreground max-w-2xl leading-relaxed font-bold tracking-tight"
             >
               {displayText}
               <motion.span
@@ -152,27 +152,8 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
               Start Building
             </Button>
 
-            <a href="https://wa.me/2347033221019" target="_blank" rel="noopener noreferrer">
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto h-14 px-8 text-base font-medium rounded-full bg-transparent border-border text-foreground hover:bg-muted transition-all"
-              >
-                <MessageCircle className="mr-2 h-5 w-5" />
-                WhatsApp
-              </Button>
-            </a>
 
-            <a href="mailto:dabstack.ltd@gmail.com">
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto h-14 px-8 text-base font-medium rounded-full bg-transparent border-border text-foreground hover:bg-muted transition-all"
-              >
-                <Mail className="mr-2 h-5 w-5" />
-                Email Us
-              </Button>
-            </a>
+
           </motion.div>
 
         </div>

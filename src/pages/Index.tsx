@@ -10,6 +10,7 @@ import { ContactSection } from "@/components/landing/ContactSection";
 import { AuthModal } from "@/components/auth/AuthModal";
 
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
+import { RegistrationCard } from "@/components/landing/RegistrationCard";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 
@@ -33,6 +34,7 @@ const Index = () => {
 
         <HowItWorksSection />
 
+        <RegistrationCard />
       </main>
       <Footer />
       <ScrollToTop />
