@@ -218,11 +218,11 @@ export function DashboardSidebar({
               {avatarUrl ? (
                 <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
               ) : (
-                <span className="font-serif italic">{user?.email?.charAt(0).toUpperCase()}</span>
+                <span className="font-black italic">{user?.email?.charAt(0).toUpperCase()}</span>
               )}
             </div>
             <div className="flex flex-col min-w-0 transition-colors duration-300">
-              <span className="text-sm font-serif italic font-bold truncate text-sidebar-foreground">Account</span>
+              <span className="text-sm font-black italic truncate text-sidebar-foreground">Account</span>
               <span className="text-[10px] text-sidebar-foreground/70 truncate font-medium">{user?.email}</span>
             </div>
           </motion.div>

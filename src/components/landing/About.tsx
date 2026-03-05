@@ -112,9 +112,9 @@ export function About() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, delay: 0.1 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium tracking-tight mt-4 mb-6 text-foreground"
+                        className="text-4xl md:text-6xl lg:text-7xl font-sans font-black tracking-tighter mt-4 mb-6 text-foreground"
                     >
-                        Dabstack Solution <span className="text-red-600 font-cursive italic">Limited</span>
+                        Dabstack Solution <span className="text-red-600">Limited</span>
                     </motion.h2>
                     <motion.div
                         initial={{ scaleX: 0 }}
@@ -134,15 +134,15 @@ export function About() {
                         transition={transition}
                         className="space-y-8"
                     >
-                        <h3 className="text-2xl md:text-3xl font-serif font-bold text-foreground">
+                        <h3 className="text-2xl md:text-3xl font-sans font-black tracking-tight text-foreground">
                             Nigeria's Best <span className="text-red-600">Fullstack</span> Agency
                         </h3>
                         <div className="space-y-6">
                             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
-                                Dabstack Solution Limited are the best fullstack developers. We are passionate about helping businesses in the retail, finance, health and corporate industries fully leverage the latest <span className="text-red-600 font-serif italic border-b-2 border-red-600/20">software technologies</span>.
+                                Dabstack Solution Limited are the best fullstack developers. We are passionate about helping businesses in the retail, finance, health and corporate industries fully leverage the latest <span className="text-red-600 font-black italic border-b-2 border-red-600/20">software technologies</span>.
                             </p>
                             <p className="text-lg text-muted-foreground/80 leading-relaxed font-light">
-                                We build corporate business solutions and ecommerce platforms for all kinds of businesses across <span className="text-red-600 font-serif italic border-b-2 border-red-600/20">global markets</span> and beyond. Our team is dedicated to creating solutions that meet your exact needs through technical excellence.
+                                We build corporate business solutions and ecommerce platforms for all kinds of businesses across <span className="text-red-600 font-black italic border-b-2 border-red-600/20">global markets</span> and beyond. Our team is dedicated to creating solutions that meet your exact needs through technical excellence.
                             </p>
                         </div>
                         <motion.button
@@ -172,7 +172,7 @@ export function About() {
                                 >
                                     <feature.icon className={`w-10 h-10 ${feature.color}`} />
                                 </motion.div>
-                                <h4 className="font-serif font-bold text-foreground text-xl mb-2">{feature.title}</h4>
+                                <h4 className="font-sans font-black text-foreground text-xl mb-2">{feature.title}</h4>
                                 <p className="text-sm text-muted-foreground font-medium">{feature.description}</p>
                             </motion.div>
                         ))}
@@ -200,7 +200,7 @@ export function About() {
                             >
                                 <card.icon className="w-10 h-10 text-white" />
                             </motion.div>
-                            <h3 className="text-2xl font-serif font-bold mb-8 tracking-tight">{card.title}</h3>
+                            <h3 className="text-2xl font-sans font-black mb-8 tracking-tight">{card.title}</h3>
                             <ul className="space-y-6 text-left w-full">
                                 {card.items.map((item, idx) => (
                                     <motion.li

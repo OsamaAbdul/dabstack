@@ -34,7 +34,7 @@ export function TechStack() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-3xl md:text-5xl font-serif font-medium mt-4 mb-2"
+                        className="text-3xl md:text-5xl font-sans font-black tracking-tighter mt-4 mb-2"
                     >
                         Our Tech Stack
                     </motion.h2>

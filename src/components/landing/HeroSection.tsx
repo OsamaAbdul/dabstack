@@ -114,16 +114,16 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           {/* Left Column: Content */}
-          <div className="lg:col-span-7 text-left">
+          <div className="lg:col-span-8 text-left">
             {/* Headline */}
             <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight mb-8 text-foreground leading-[1.1]"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-sans font-black tracking-tighter mb-8 text-foreground leading-[1.1]"
             >
               We Build, Manage <br className="hidden md:block" />
-              & Scale <span className="font-serif text-primary">Modern</span> <br className="hidden md:block" />
+              & Scale <span className="text-primary">Modern</span> <br className="hidden md:block" />
               <span className="text-foreground">Websites</span>
             </motion.h1>
 
@@ -165,7 +165,7 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
             initial={{ opacity: 0, scale: 0.8, rotateY: 20 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 hidden lg:block perspective-1000"
+            className="lg:col-span-4 hidden lg:block perspective-1000"
           >
             <motion.div
               animate={{ y: [0, -15, 0] }}

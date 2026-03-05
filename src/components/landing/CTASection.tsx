@@ -30,7 +30,7 @@ export function CTASection({ onGetStarted }: CTASectionProps) {
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
             Ready to Build Something{" "}
-            <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] italic font-serif">Extraordinary?</span>
+            <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] italic font-black">Extraordinary?</span>
           </h2>
 
           <p className="text-primary-foreground/80 text-lg mb-10 max-w-xl mx-auto">

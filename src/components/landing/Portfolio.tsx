@@ -80,7 +80,7 @@ export function Portfolio() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-3xl md:text-5xl font-serif font-bold mt-4 mb-2"
+                        className="text-3xl md:text-5xl font-sans font-black tracking-tighter mt-4 mb-2"
                     >
                         Our Portfolio
                     </motion.h2>
@@ -154,7 +154,7 @@ export function Portfolio() {
                                 <p className="text-red-500 text-[10px] font-bold uppercase tracking-widest mb-2">
                                     {project.category}
                                 </p>
-                                <h3 className="text-xl font-serif font-medium text-foreground group-hover:text-red-600 transition-colors duration-300 mb-3">
+                                <h3 className="text-xl font-sans font-bold text-foreground group-hover:text-red-600 transition-colors duration-300 mb-3">
                                     {project.title}
                                 </h3>
                                 {'description' in project && (
