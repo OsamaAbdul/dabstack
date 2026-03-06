@@ -12,7 +12,9 @@ import {
   X,
   Cloud,
   Globe,
-  Cpu
+  Cpu,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -21,6 +23,8 @@ import { useNavigate } from "react-router-dom";
 interface DashboardSidebarProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
+  isCollapsed?: boolean;
+  onToggle?: () => void;
   isOpen?: boolean;
   onClose?: () => void;
   avatarUrl: string | null;
@@ -36,6 +40,8 @@ const navItems = [
 export function DashboardSidebar({
   activeSection,
   onSectionChange,
+  isCollapsed,
+  onToggle,
   isOpen,
   onClose,
   avatarUrl
@@ -52,26 +58,17 @@ export function DashboardSidebar({
 
   return (
     <>
-      {/* Backdrop for mobile */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={onClose}
-        />
-      )}
-
       <motion.aside
         initial={{ x: "-100%" }}
-        animate={{
-          x: isOpen ? 0 : (window.innerWidth < 768 ? "-100%" : 0),
-        }}
+        animate={{ x: 0 }}
         transition={{
           type: "tween",
           ease: "circOut",
           duration: 0.25
         }}
         className={cn(
-          "w-64 h-screen bg-sidebar text-sidebar-foreground flex flex-col fixed left-0 top-0 z-50 md:translate-x-0 border-r border-sidebar-border shadow-2xl transition-colors duration-500 overflow-hidden"
+          "h-screen bg-sidebar text-sidebar-foreground hidden md:flex flex-col fixed left-0 top-0 z-50 border-r border-sidebar-border shadow-2xl transition-all duration-300 overflow-hidden",
+          isCollapsed ? "w-20" : "w-64"
         )}
       >
         {/* Hero Background Image Integration */}
@@ -112,33 +109,44 @@ export function DashboardSidebar({
         </div>
 
         {/* Logo & Close Button */}
-        <div className="p-8 pb-10 flex items-center justify-between">
+        <div className={cn(
+          "p-8 pb-10 flex items-center justify-between transition-all duration-300",
+          isCollapsed ? "p-4 flex-col gap-6" : "p-8"
+        )}>
           <div className="flex items-center gap-3 group cursor-pointer">
             <div className="relative">
-              {/* Show LIGHTMODE.png (darker logo) when in light mode */}
+              {/* Show LIGHTMODE.png (dark logo) when NOT in dark mode (Light Mode) */}
               <img
                 src="/LIGHTMODE.png"
                 alt="Dabstack"
-                className="block dark:hidden rounded-xl shadow-lg hover:scale-110 transition-transform duration-300 h-12 w-auto object-contain"
+                className={cn(
+                  "block dark:hidden rounded-xl shadow-lg hover:scale-110 transition-transform duration-300 object-contain",
+                  isCollapsed ? "h-10 w-10" : "h-12 w-auto"
+                )}
               />
-              {/* Show DARKMODE.png (lighter logo) when in dark mode */}
+              {/* Show DARKMODE.png (light logo) when in dark mode */}
               <img
-                src="/LIGHTMODE.png"
+                src="/DARKMODE.png"
                 alt="Dabstack"
-                className="hidden dark:block rounded-xl shadow-lg shadow-red-600/20 hover:scale-110 transition-transform duration-300 border border-sidebar-foreground/10 h-12 w-auto object-contain"
+                className={cn(
+                  "hidden dark:block rounded-xl shadow-lg shadow-red-600/20 hover:scale-110 transition-transform duration-300 border border-sidebar-foreground/10 object-contain",
+                  isCollapsed ? "h-10 w-10" : "h-12 w-auto"
+                )}
               />
             </div>
-
           </div>
 
-          {/* Mobile Close Button */}
           <Button
             variant="ghost"
             size="icon"
-            onClick={onClose}
-            className="md:hidden text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-foreground/10 rounded-full"
+            onClick={onToggle}
+            className={cn(
+              "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-foreground/10 rounded-full transition-all duration-300",
+              isCollapsed ? "h-8 w-8" : "h-10 w-10"
+            )}
+            title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
-            <X className="h-6 w-6" />
+            {isCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
           </Button>
         </div>
 
@@ -151,8 +159,10 @@ export function DashboardSidebar({
                 <button
                   key={item.id}
                   onClick={() => onSectionChange(item.id)}
+                  title={isCollapsed ? item.label : undefined}
                   className={cn(
                     "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative",
+                    isCollapsed ? "px-2 justify-center" : "px-4",
                     activeSection === item.id
                       ? "bg-sidebar-foreground/5 text-sidebar-foreground shadow-sm"
                       : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-foreground/5"
@@ -164,7 +174,14 @@ export function DashboardSidebar({
                   )}>
                     <item.icon className="h-4 w-4" />
                   </div>
-                  {item.label}
+                  {!isCollapsed && (
+                    <motion.span
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                    >
+                      {item.label}
+                    </motion.span>
+                  )}
                   {activeSection === item.id && (
                     <motion.div
                       layoutId="sidebar-active"
@@ -178,11 +195,13 @@ export function DashboardSidebar({
 
           {isAdmin && (
             <>
-              <div className="mt-8 mb-4 px-4 text-[10px] font-bold text-sidebar-foreground/60 uppercase tracking-[0.2em] transition-colors duration-300">Administration</div>
+              {!isCollapsed && <div className="mt-8 mb-4 px-4 text-[10px] font-bold text-sidebar-foreground/60 uppercase tracking-[0.2em] transition-colors duration-300">Administration</div>}
               <button
                 onClick={() => onSectionChange("admin")}
+                title={isCollapsed ? "Admin Panel" : undefined}
                 className={cn(
                   "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group relative",
+                  isCollapsed ? "px-2 justify-center" : "px-4",
                   activeSection === "admin"
                     ? "bg-sidebar-foreground/5 text-sidebar-foreground shadow-sm"
                     : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-foreground/5"
@@ -194,7 +213,14 @@ export function DashboardSidebar({
                 )}>
                   <Shield className="h-4 w-4" />
                 </div>
-                Admin Panel
+                {!isCollapsed && (
+                  <motion.span
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                  >
+                    Admin Panel
+                  </motion.span>
+                )}
                 {activeSection === "admin" && (
                   <motion.div
                     layoutId="sidebar-active"
@@ -207,32 +233,48 @@ export function DashboardSidebar({
         </nav>
 
         {/* Footer */}
-        <div className="p-6 border-t border-sidebar-border bg-sidebar/50 backdrop-blur-md relative z-10">
+        <div className={cn(
+          "p-6 border-t border-sidebar-border bg-sidebar/50 backdrop-blur-md relative z-10 transition-all duration-300",
+          isCollapsed ? "p-3" : "p-6"
+        )}>
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="flex items-center gap-3 px-3 py-3 mb-4 rounded-2xl bg-sidebar-foreground/5 border border-sidebar-foreground/10 shadow-lg transition-all"
+            className={cn(
+              "flex items-center gap-3 px-3 py-3 mb-4 rounded-2xl bg-sidebar-foreground/5 border border-sidebar-foreground/10 shadow-lg transition-all",
+              isCollapsed ? "justify-center px-0" : "justify-start"
+            )}
           >
-            <div className="relative h-12 w-12 rounded-full ring-2 ring-primary/20 flex items-center justify-center text-sm font-bold border border-sidebar-foreground/20 text-sidebar-foreground overflow-hidden bg-primary/10">
+            <div className="relative h-12 w-12 flex-shrink-0 rounded-full ring-2 ring-primary/20 flex items-center justify-center text-sm font-bold border border-sidebar-foreground/20 text-sidebar-foreground overflow-hidden bg-primary/10">
               {avatarUrl ? (
                 <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
               ) : (
                 <span className="font-black italic">{user?.email?.charAt(0).toUpperCase()}</span>
               )}
             </div>
-            <div className="flex flex-col min-w-0 transition-colors duration-300">
-              <span className="text-sm font-black italic truncate text-sidebar-foreground">Account</span>
-              <span className="text-[10px] text-sidebar-foreground/70 truncate font-medium">{user?.email}</span>
-            </div>
+            {!isCollapsed && (
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex flex-col min-w-0 transition-colors duration-300"
+              >
+                <span className="text-sm font-black italic truncate text-sidebar-foreground">Account</span>
+                <span className="text-[10px] text-sidebar-foreground/70 truncate font-medium">{user?.email}</span>
+              </motion.div>
+            )}
           </motion.div>
 
           <div className="flex gap-2">
             <Button
               variant="ghost"
               onClick={handleLogout}
-              className="flex-1 justify-start gap-3 h-12 px-4 text-sidebar-foreground/70 hover:text-primary hover:bg-primary/10 rounded-xl transition-all border border-transparent hover:border-primary/20"
+              title={isCollapsed ? "Log out" : undefined}
+              className={cn(
+                "flex-1 justify-start gap-3 h-12 px-4 text-sidebar-foreground/70 hover:text-primary hover:bg-primary/10 rounded-xl transition-all border border-transparent hover:border-primary/20",
+                isCollapsed ? "justify-center px-0" : "justify-start"
+              )}
             >
               <LogOut className="h-5 w-5 text-primary" />
-              <span className="text-sm font-bold text-sidebar-foreground transition-colors duration-300">Log out</span>
+              {!isCollapsed && <span className="text-sm font-bold text-sidebar-foreground transition-colors duration-300">Log out</span>}
             </Button>
           </div>
         </div>

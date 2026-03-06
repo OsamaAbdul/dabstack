@@ -51,72 +51,79 @@ export function ProjectCard({ project, onClick, hasUnread }: ProjectCardProps) {
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
       <Card
-        className="p-6 cursor-pointer hover:shadow-large transition-shadow bg-background/50 backdrop-blur-sm border-border/50"
+        className="p-6 cursor-pointer hover:shadow-2xl transition-all duration-500 bg-background/40 backdrop-blur-xl border-border/40 hover:border-primary/30 relative overflow-hidden group"
         onClick={onClick}
       >
-        <div className="flex items-start justify-between mb-4">
-          <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center relative">
-            <Icon className="h-6 w-6 text-primary" />
+        {/* Subtle Decorative Glow */}
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors duration-500" />
+
+        <div className="flex items-start justify-between mb-6 relative z-10">
+          <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center relative border border-primary/20 shadow-inner group-hover:scale-110 transition-transform duration-500">
+            <Icon className="h-7 w-7 text-primary" />
             {hasUnread && (
-              <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-600 rounded-full border-2 border-background animate-pulse" />
+              <span className="absolute -top-1 -right-1 h-3.5 w-3.5 bg-red-600 rounded-full border-[3px] border-background animate-pulse" />
             )}
           </div>
           <Badge
             variant="outline"
-            className={cn("capitalize", statusColors[project.status])}
+            className={cn("capitalize px-3 py-1 text-[10px] font-black tracking-widest border-2", statusColors[project.status])}
           >
             {statusLabels[project.status]}
           </Badge>
         </div>
 
-        <h3 className="font-semibold text-lg capitalize mb-2">{project.type} Project</h3>
+        <div className="relative z-10">
+          <h3 className="font-black text-xl capitalize mb-2 tracking-tight">{project.type} Solution</h3>
 
-        {project.target_audience && (
-          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-            Target: {project.target_audience}
-          </p>
-        )}
-
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          {project.budget && (
-            <div className="flex items-center gap-1">
-              <span className="text-primary font-bold">₦</span>
-              <span>{Number(project.budget).toLocaleString()}</span>
-            </div>
+          {project.target_audience && (
+            <p className="text-sm text-muted-foreground mb-6 line-clamp-2 font-medium">
+              Built for <span className="text-foreground">{project.target_audience}</span>
+            </p>
           )}
-          <div className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            <span>{format(new Date(project.created_at), "MMM d")}</span>
-          </div>
-        </div>
 
-        {/* Status Stepper */}
-        <div className="mt-4 pt-4 border-t">
-          <div className="flex items-center gap-1">
-            {(["onboarding", "review", "in_progress", "completed"] as ProjectStatus[]).map((status, index) => {
-              const statusIndex = ["onboarding", "review", "in_progress", "completed"].indexOf(project.status);
-              const currentIndex = index;
-              const isActive = currentIndex <= statusIndex;
-
-              return (
-                <div key={status} className="flex items-center flex-1">
-                  <div
-                    className={cn(
-                      "h-2 w-full rounded-full transition-colors",
-                      isActive ? "bg-primary" : "bg-muted"
-                    )}
-                  />
-                </div>
-              );
-            })}
+          <div className="flex items-center gap-5 text-sm mb-6">
+            {project.budget && (
+              <div className="flex items-center gap-2 bg-primary/5 px-3 py-1.5 rounded-xl border border-primary/10">
+                <Banknote className="h-4 w-4 text-primary" />
+                <span className="font-bold tracking-tighter">₦{Number(project.budget).toLocaleString()}</span>
+              </div>
+            )}
+            <div className="flex items-center gap-2 text-muted-foreground font-semibold">
+              <Clock className="h-4 w-4" />
+              <span>{format(new Date(project.created_at), "MMM d, yyyy")}</span>
+            </div>
           </div>
-          <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-            <span>Start</span>
-            <span>Complete</span>
+
+          {/* Status Stepper */}
+          <div className="pt-6 border-t border-border/50">
+            <div className="flex items-center gap-1.5">
+              {(["onboarding", "review", "in_progress", "completed"] as ProjectStatus[]).map((status, index) => {
+                const statusIndex = ["onboarding", "review", "in_progress", "completed"].indexOf(project.status);
+                const currentIndex = index;
+                const isActive = currentIndex <= statusIndex;
+
+                return (
+                  <div key={status} className="flex items-center flex-1 h-1.5">
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        backgroundColor: isActive ? "hsl(var(--primary))" : "hsl(var(--muted))",
+                        opacity: isActive ? 1 : 0.3
+                      }}
+                      className="h-full w-full rounded-full transition-colors shadow-sm"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex justify-between mt-3 text-[10px] font-black uppercase tracking-[0.15em] text-muted-foreground">
+              <span className={cn(project.status === "onboarding" && "text-primary")}>Discovery</span>
+              <span className={cn(project.status === "completed" && "text-green-500")}>Launch</span>
+            </div>
           </div>
         </div>
       </Card>

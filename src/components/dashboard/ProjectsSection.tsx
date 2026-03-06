@@ -75,42 +75,51 @@ We've successfully kickstarted your new **${data.type}** project. Here's the sna
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold">Your Projects</h2>
-          <p className="text-muted-foreground">
-            Manage and track your project portfolio
+          <h2 className="text-4xl font-black tracking-tighter mb-2">Project Portfolio</h2>
+          <p className="text-muted-foreground font-medium text-lg">
+            Monitor development progress and manage your active solutions
           </p>
         </div>
-        <Button onClick={() => setIsOnboardingOpen(true)} className="gap-2">
-          <Plus className="h-4 w-4" />
-          New Project
+        <Button
+          onClick={() => setIsOnboardingOpen(true)}
+          className="gap-2 h-12 px-6 rounded-2xl bg-primary hover:bg-red-700 shadow-[0_10px_30px_-10px_rgba(239,68,68,0.5)] transition-all hover:scale-105 active:scale-95"
+        >
+          <Plus className="h-5 w-5" />
+          <span className="font-bold tracking-tight">Initiate Project</span>
         </Button>
       </div>
 
       {projects.length === 0 ? (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          <Card className="p-12 text-center bg-gradient-to-br from-background to-muted/30 border-dashed border-2">
-            <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-              <FolderOpen className="h-8 w-8 text-primary" />
+          <Card className="p-16 text-center bg-background/40 backdrop-blur-xl border-dashed border-2 border-border/50 relative overflow-hidden group">
+            {/* Background Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[100px] group-hover:bg-primary/10 transition-colors duration-700" />
+
+            <div className="relative z-10">
+              <div className="h-20 w-20 rounded-[2rem] bg-primary/10 flex items-center justify-center mx-auto mb-8 border border-primary/20 shadow-xl group-hover:rotate-12 transition-transform duration-500">
+                <FolderOpen className="h-10 w-10 text-primary" />
+              </div>
+              <h3 className="text-3xl font-black tracking-tighter mb-4">No Active Projects</h3>
+              <p className="text-muted-foreground mb-10 max-w-lg mx-auto text-lg leading-relaxed font-medium">
+                Your innovation journey starts here. Launch your first project and
+                collaborate with our elite engineering team to bring your vision to life.
+              </p>
+              <Button
+                size="lg"
+                onClick={() => setIsOnboardingOpen(true)}
+                className="gap-3 h-14 px-10 text-lg font-bold rounded-2xl bg-primary hover:bg-red-700 shadow-large hover-lift"
+              >
+                <Plus className="h-6 w-6" />
+                Start My First Project
+              </Button>
             </div>
-            <h3 className="text-xl font-semibold mb-2">No projects yet</h3>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Start your first project and bring your ideas to life. Our guided
-              onboarding will help you get set up in minutes.
-            </p>
-            <Button
-              size="lg"
-              onClick={() => setIsOnboardingOpen(true)}
-              className="gap-2 shadow-medium hover-lift"
-            >
-              <Plus className="h-5 w-5" />
-              Start New Project
-            </Button>
           </Card>
         </motion.div>
       ) : (

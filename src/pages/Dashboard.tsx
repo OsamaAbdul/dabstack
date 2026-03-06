@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { ProjectsSection } from "@/components/dashboard/ProjectsSection";
 import { AdminPanel } from "@/components/dashboard/AdminPanel";
@@ -12,6 +13,7 @@ import { Loader2, MessageSquare, CreditCard, Settings, Sparkles, Menu, Bell } fr
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { BottomNav } from "@/components/dashboard/BottomNav";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function Dashboard() {
@@ -20,8 +22,19 @@ export default function Dashboard() {
   const [activeSection, setActiveSection] = useState("projects");
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    return localStorage.getItem("sidebar_collapsed") === "true";
+  });
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [unreadCount, setUnreadCount] = useState(0);
+
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(prev => {
+      const next = !prev;
+      localStorage.setItem("sidebar_collapsed", String(next));
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -166,85 +179,85 @@ export default function Dashboard() {
         );
     }
   };
-
   return (
-    <div className="min-h-screen bg-background transition-colors duration-500">
-      {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-primary text-primary-foreground">
-        <div className="flex items-center">
-          <img
-            src="/LIGHTMODE.png"
-            alt="Dabstack"
-            className="h-8 w-auto dark:hidden rounded-lg shadow-sm"
-            width={80}
-            height={64}
-          />
-          <img
-            src="/DARKMODE.png"
-            alt="Dabstack"
-            className="h-8 w-auto hidden dark:block rounded-lg shadow-sm"
-            width={80}
-            height={64}
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsSidebarOpen(true)}
-            className="text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <Menu className="h-6 w-6" />
-          </Button>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-background transition-colors duration-500 flex flex-col md:flex-row">
       <DashboardSidebar
         activeSection={activeSection}
         onSectionChange={(section) => {
           setActiveSection(section);
           setIsSidebarOpen(false);
         }}
+        isCollapsed={isSidebarCollapsed}
+        onToggle={toggleSidebar}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         avatarUrl={avatarUrl}
       />
 
-      <main className="md:pl-64">
-        {/* Desktop Header */}
-        <div className="hidden md:flex items-center justify-end p-8 pb-0 max-w-6xl gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative text-muted-foreground hover:text-foreground"
-            onClick={handleNotificationClick}
-          >
-            <Bell className="h-5 w-5" />
-            {unreadCount > 0 && (
-              <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-600 animate-pulse" />
-            )}
-          </Button>
-          <ThemeToggle />
-          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border border-border">
-            {avatarUrl ? (
-              <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
-            ) : (
-              <span className="text-sm font-bold text-primary">
-                {user?.email?.charAt(0).toUpperCase()}
-              </span>
-            )}
-          </div>
-        </div>
+      <div className={cn(
+        "flex-1 transition-all duration-300 min-h-screen flex flex-col w-full",
+        isSidebarCollapsed ? "md:pl-20" : "md:pl-64"
+      )}>
+        {/* Header */}
+        <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/50 px-4 md:px-8 py-4">
+          <div className="flex items-center justify-between max-w-6xl mx-auto w-full">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <img
+                  src="/LIGHTMODE.png"
+                  alt="Dabstack"
+                  className="h-8 w-auto block dark:hidden object-contain"
+                />
+                <img
+                  src="/DARKMODE.png"
+                  alt="Dabstack"
+                  className="h-8 w-auto hidden dark:block object-contain"
+                />
+              </div>
+            </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="p-4 md:p-8 max-w-6xl"
-        >
-          {renderSection()}
-        </motion.div>
-      </main>
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative text-muted-foreground hover:text-foreground"
+                onClick={handleNotificationClick}
+              >
+                <Bell className="h-5 w-5" />
+                {unreadCount > 0 && (
+                  <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-600 animate-pulse" />
+                )}
+              </Button>
+              <ThemeToggle />
+              <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border border-border">
+                {avatarUrl ? (
+                  <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
+                ) : (
+                  <span className="text-sm font-bold text-primary">
+                    {user?.email?.charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 pb-24 md:pb-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-4 md:p-8 max-w-6xl mx-auto"
+          >
+            {renderSection()}
+          </motion.div>
+        </main>
+
+        <BottomNav
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+          isAdmin={isAdmin}
+        />
+      </div>
     </div>
   );
 }
