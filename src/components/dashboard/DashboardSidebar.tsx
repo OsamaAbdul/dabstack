@@ -115,19 +115,17 @@ export function DashboardSidebar({
         <div className="p-8 pb-10 flex items-center justify-between">
           <div className="flex items-center gap-3 group cursor-pointer">
             <div className="relative">
-              <img
-                src="/DARKMODE.png"
-                alt="Dabstack"
-                className="dark:hidden rounded-xl shadow-2xl hover:scale-110 transition-transform duration-300"
-                width={50}
-                height={50}
-              />
+              {/* Show LIGHTMODE.png (darker logo) when in light mode */}
               <img
                 src="/LIGHTMODE.png"
                 alt="Dabstack"
-                className="hidden dark:block rounded-xl shadow-2xl shadow-red-600/20 hover:scale-110 transition-transform duration-300 border border-sidebar-foreground/10"
-                width={50}
-                height={50}
+                className="block dark:hidden rounded-xl shadow-lg hover:scale-110 transition-transform duration-300 h-12 w-auto object-contain"
+              />
+              {/* Show DARKMODE.png (lighter logo) when in dark mode */}
+              <img
+                src="/LIGHTMODE.png"
+                alt="Dabstack"
+                className="hidden dark:block rounded-xl shadow-lg shadow-red-600/20 hover:scale-110 transition-transform duration-300 border border-sidebar-foreground/10 h-12 w-auto object-contain"
               />
             </div>
 

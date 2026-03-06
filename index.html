@@ -27,8 +27,17 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Instrument+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap"
     rel="stylesheet">
   <script>
-    // Immediate dark mode enforcement for premium first paint
-    document.documentElement.classList.add('dark');
+    (function () {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (prefersDark ? 'dark' : 'dark'); // Defaulting to dark as requested
+
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
   </script>
 </head>
 

@@ -98,7 +98,7 @@ export function Portfolio() {
                         transition={{ delay: 0.3 }}
                         className="text-muted-foreground max-w-3xl mx-auto text-sm md:text-base leading-relaxed"
                     >
-                        As the top web designer in Nigeria and a leading web design company in Lagos, we've poured our hearts into hundreds of projects. Below are some of our works:
+                        As the top web designer in Nigeria and a leading web design company in Abuja, we've poured our hearts into hundreds of projects. Below are some of our works:
                     </motion.p>
                 </div>
 

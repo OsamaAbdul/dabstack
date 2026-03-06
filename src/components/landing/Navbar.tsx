@@ -32,7 +32,7 @@ export function Navbar({ onGetStarted }: NavbarProps) {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-6xl pointer-events-auto"
       >
-        <div className="bg-black/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-white/10 dark:border-white/5 rounded-[40px] px-6 sm:px-12 py-4 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-[40px] px-6 sm:px-12 py-4 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 
           {/* Logo */}
           <motion.div
@@ -41,21 +41,26 @@ export function Navbar({ onGetStarted }: NavbarProps) {
           >
             <a href="/" className="flex items-center gap-4">
               <img
+                src="/LIGHTMODE.png"
+                alt="DABSTACK"
+                className="h-14 w-auto rounded-lg dark:hidden"
+              />
+              <img
                 src="/DARKMODE.png"
                 alt="DABSTACK"
-                className="h-14 w-auto rounded-lg"
+                className="h-14 w-auto rounded-lg hidden dark:block"
               />
-              <span className="text-white/70 hover:text-white text-lg font-bold transition-colors">DABSTACK</span>
+              <span className="text-zinc-900 dark:text-white/70 hover:text-red-500 dark:hover:text-white text-lg font-bold transition-colors">DABSTACK</span>
             </a>
           </motion.div>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8 bg-white/5 px-6 py-2.5 rounded-full border border-white/10 mx-4">
+          <div className="hidden md:flex items-center gap-8 bg-black/5 dark:bg-white/5 px-6 py-2.5 rounded-full border border-black/10 dark:border-white/10 mx-4">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-white/70 hover:text-red-500 text-sm font-medium transition-colors duration-200"
+                className="text-zinc-900/70 dark:text-white/70 hover:text-red-500 text-sm font-medium transition-colors duration-200"
               >
                 {link.label}
               </a>
@@ -64,12 +69,12 @@ export function Navbar({ onGetStarted }: NavbarProps) {
 
           {/* Socials & Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <div className="flex items-center gap-4 text-white/50 border-r border-white/10 pr-4 mr-2">
+            <div className="flex items-center gap-4 text-zinc-900/50 dark:text-white/50 border-r border-black/10 dark:border-white/10 pr-4 mr-2">
               <motion.a
                 href="https://twitter.com/dabstacknigeria"
                 target="_blank"
-                whileHover={{ scale: 1.2, color: "#fff" }}
-                className="hover:text-white transition-colors"
+                whileHover={{ scale: 1.2, color: "#ef4444" }}
+                className="hover:text-red-500 dark:hover:text-white transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="w-4.5 h-4.5" />
@@ -77,8 +82,8 @@ export function Navbar({ onGetStarted }: NavbarProps) {
               <motion.a
                 href="https://instagram.com/dab.stack"
                 target="_blank"
-                whileHover={{ scale: 1.2, color: "#fff" }}
-                className="hover:text-white transition-colors"
+                whileHover={{ scale: 1.2, color: "#ef4444" }}
+                className="hover:text-red-500 dark:hover:text-white transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="w-4.5 h-4.5" />
@@ -88,7 +93,7 @@ export function Navbar({ onGetStarted }: NavbarProps) {
             <div className="flex items-center gap-4">
               <button
                 onClick={onGetStarted}
-                className="text-white/70 hover:text-white text-sm font-semibold transition-colors"
+                className="text-zinc-900/70 dark:text-white/70 hover:text-zinc-900 dark:hover:text-white text-sm font-semibold transition-colors"
               >
                 Login
               </button>
@@ -112,7 +117,7 @@ export function Navbar({ onGetStarted }: NavbarProps) {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white hover:bg-white/10 rounded-full"
+              className="text-zinc-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -126,7 +131,7 @@ export function Navbar({ onGetStarted }: NavbarProps) {
               initial={{ opacity: 0, scale: 0.95, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              className="md:hidden mt-4 bg-black/95 dark:bg-zinc-900/95 backdrop-blur-2xl border border-white/10 rounded-[30px] p-6 shadow-2xl"
+              className="md:hidden mt-4 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-[30px] p-6 shadow-2xl"
             >
               <div className="flex flex-col gap-6">
                 {navLinks.map((link) => (
@@ -134,19 +139,19 @@ export function Navbar({ onGetStarted }: NavbarProps) {
                     key={link.label}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="text-white/80 hover:text-red-500 text-lg font-semibold flex items-center justify-between group"
+                    className="text-zinc-900/80 dark:text-white/80 hover:text-red-500 text-lg font-semibold flex items-center justify-between group"
                   >
                     {link.label}
                     <ChevronRight className="w-5 h-5 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
                   </a>
                 ))}
 
-                <div className="h-px bg-white/10 my-2" />
+                <div className="h-px bg-black/10 dark:bg-white/10 my-2" />
 
                 <div className="flex flex-col gap-4">
                   <Button
                     variant="ghost"
-                    className="w-full text-white/70 justify-center hover:bg-white/5 h-14 rounded-2xl text-lg font-bold"
+                    className="w-full text-zinc-900/70 dark:text-white/70 justify-center hover:bg-black/5 dark:hover:bg-white/5 h-14 rounded-2xl text-lg font-bold"
                     onClick={() => {
                       onGetStarted();
                       setIsOpen(false);
@@ -165,11 +170,11 @@ export function Navbar({ onGetStarted }: NavbarProps) {
                   </Button>
                 </div>
 
-                <div className="flex items-center justify-center gap-8 text-white/50 pt-4">
-                  <a href="https://twitter.com/dabstacknigeria" target="_blank" className="hover:text-white transition-colors">
+                <div className="flex items-center justify-center gap-8 text-zinc-900/50 dark:text-white/50 pt-4">
+                  <a href="https://twitter.com/dabstacknigeria" target="_blank" className="hover:text-red-500 dark:hover:text-white transition-colors">
                     <Twitter className="w-6 h-6" />
                   </a>
-                  <a href="https://instagram.com/dab.stack" target="_blank" className="hover:text-white transition-colors">
+                  <a href="https://instagram.com/dab.stack" target="_blank" className="hover:text-red-500 dark:hover:text-white transition-colors">
                     <Instagram className="w-6 h-6" />
                   </a>
                 </div>
