@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { Navbar } from "@/components/landing/Navbar";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { Footer } from "@/components/landing/Footer";
@@ -16,6 +18,15 @@ import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 
 const Index = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { user, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      navigate("/dashboard");
+    }
+  }, [user, isLoading, navigate]);
+
 
   const handleGetStarted = () => {
     setIsAuthModalOpen(true);
