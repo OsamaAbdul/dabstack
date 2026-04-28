@@ -1,9 +1,7 @@
 import { motion } from "framer-motion";
 import {
-  Twitter,
-  Instagram,
-  Youtube,
   Linkedin,
+  Facebook,
   Phone,
   Mail,
   MapPin,
@@ -19,10 +17,8 @@ export function Footer() {
   const [showTerms, setShowTerms] = useState(false);
 
   const socialLinks = [
-    { icon: Twitter, href: "https://www.x.com/dabstacknigeria", label: "Twitter" },
-    { icon: Instagram, href: "https://www.instagram.com/dab.stack", label: "Instagram" },
-    { icon: Youtube, href: "#", label: "Youtube" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61588676710224", label: "Facebook" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/dabstack-🕸️-aa0477405?utm_source=share_via&utm_content=profile&utm_medium=member_ios", label: "LinkedIn" },
   ];
 
   const quickLinks = [
